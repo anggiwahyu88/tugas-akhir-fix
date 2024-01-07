@@ -39,7 +39,7 @@ const Dashboard = () => {
                     </div>
                     <div className="p-3 w-full h-full flex flex-col justify-between">
                         <p>Harap lengkapi biodata terlebih dahulu</p>
-                        <Link to={"/student/dashboard/edit-biodata"} className="text-center bg-yellow-500 w-full py-1.5 border border-yellow-600 text-white">Lengkapi Biodata</Link>
+                        <Link href={"/biodata"} className="text-center bg-yellow-500 w-full py-1.5 border border-yellow-600 text-white">Lengkapi Biodata</Link>
                     </div>
                 </div>
                 <div className="rounded w-[26rem] h-56 flex flex-col border border-yellow-600">

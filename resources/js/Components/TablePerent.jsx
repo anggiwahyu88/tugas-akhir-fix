@@ -1,8 +1,9 @@
-import Label from "../../../Libs/Label";
-import Input from "../../../Libs/Input";
-import Dropdown from "../../../Libs/Dropdown";
+import Input from "@/Components/Input";
+import Label from "@/Components/Label";
+import Dropdown from "@/helpers/Dropdown";
 
-const TablePerent = ({ title, setState }) => {
+const TablePerent = ({ title, setState, value }) => {
+    const key = title == "Ibu" ? "mother" : "father"
     const optionsEducatin = [
         {
             value: 'DEFAULT',
@@ -141,10 +142,7 @@ const TablePerent = ({ title, setState }) => {
                     </Label>
                 </div>
                 <div className="md:col-span-3 col-span-4">
-                    <Input name={`Nama ${title}`} type={"text"} onChange={(e) => setState((prev) => ({
-                        ...prev,
-                        name: e.target.value,
-                    }))} />
+                    <Input value={value.name} name={`Nama ${title}`} type={"text"} onChange={(e) => setState(key, 'name', e.target.value.toUpperCase())} />
                 </div>
             </div>
             <div className={`grid gap-1.5 my-3 md:grid-cols-4 md:grid-rows-1 md:gap-5`}>
@@ -154,10 +152,7 @@ const TablePerent = ({ title, setState }) => {
                     </Label>
                 </div>
                 <div className="md:col-span-3 col-span-4">
-                    <Dropdown name={`Pendidikan ${title}`} value={optionsEducatin} onChange={(e) => setState((prev) => ({
-                        ...prev,
-                        education: e.target.value,
-                    }))} />
+                    <Dropdown name={`Pendidikan ${title}`} value={optionsEducatin} onChange={(e) => setState(key, 'education', e.target.value)} />
                 </div>
             </div>
             <div className={`grid gap-1.5 my-3 md:grid-cols-4 md:grid-rows-1 md:gap-5`}>
@@ -167,10 +162,7 @@ const TablePerent = ({ title, setState }) => {
                     </Label>
                 </div>
                 <div className="md:col-span-3 col-span-4">
-                    <Dropdown name={`Pekerjaan ${title}`} value={optionsWork} onChange={(e) => setState((prev) => ({
-                        ...prev,
-                        work: e.target.value,
-                    }))} />
+                    <Dropdown name={`Pekerjaan ${title}`} value={optionsWork} onChange={(e) => setState(key, 'work', e.target.value)} />
                 </div>
             </div>
             <div className={`grid gap-1.5 my-3 md:grid-cols-4 md:grid-rows-1 md:gap-5`}>
@@ -180,10 +172,7 @@ const TablePerent = ({ title, setState }) => {
                     </Label>
                 </div>
                 <div className="md:col-span-3 col-span-4">
-                    <Dropdown name={`Penghasilan ${title}`} value={optionsIncome} onChange={(e) => setState((prev) => ({
-                        ...prev,
-                        income: e.target.value,
-                    }))} />
+                    <Dropdown name={`Penghasilan ${title}`} value={optionsIncome} onChange={(e) => setState(key, 'income', e.target.value)} />
                 </div>
             </div>
 
@@ -194,10 +183,7 @@ const TablePerent = ({ title, setState }) => {
                     </Label>
                 </div>
                 <div className="md:col-span-3 col-span-4">
-                    <Input name={`Nomor TLPN/HP/WA ${title}`} type={"number"} onChange={(e) => setState((prev) => ({
-                        ...prev,
-                        phone: e.target.value,
-                    }))} />
+                    <Input name={`Nomor TLPN/HP/WA ${title}`} type={"number"} onChange={(e) => setState(key, 'phone', e.target.value)} />
                 </div>
             </div>
         </div>

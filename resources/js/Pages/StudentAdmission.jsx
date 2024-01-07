@@ -1,18 +1,12 @@
-import { useEffect } from "react";
-import Layout from "../../Layout/Layout";
-import { Link } from "react-router-dom";
+import Guest from '@/Layouts/GuestLayout';
+import { Link } from '@inertiajs/react'
 
 const StudentAdmission = () => {
-    useEffect(() => {
-        window.scrollTo({
-            top: 0
-        })
-    }, [])
     return (
-        <Layout title={"Pendaftaran Siswa Baru SMK SORE Tulungagung"}>
+        <Guest title={"Pendaftaran Siswa Baru SMK SORE Tulungagung"}>
             <div className="w-full flex justify-center my-4 px-2" >
                 <div className="rounded grid grid-cols-1 md:grid-cols-2 shadow-2xl">
-                    <img src="/brosur.jpeg" alt="" className="rounded-t md:rounded-l h-[30rem] w-96" />
+                    <img src="storage/brosur.jpeg" alt="brosur" className="rounded-t md:rounded-l h-[30rem] w-96" />
                     <div className="md:w-96 max-w-sm rounded-b-lg md:rounded-r p-4">
                         <h3 className="text-3xl text-center font-semibold mt-2">Syarat Pendaftaran</h3>
                         <ol className="p-6">
@@ -23,7 +17,7 @@ const StudentAdmission = () => {
                             <li>Pada saat Pendaftaran Calon Peserta Didik Wajib datang ke SMK SORE Tulungagung dengan membawa foto copy Rapor semester 3-5 yang sudah dilegalisir</li>
                         </ol>
                         <div className="w-full flex justify-end mt-12 pr-6">
-                            <Link to="/auth/register" className=" bg-blue-600 hover:bg-blue-700 transition-all py-3 px-7 rounded-2xl text-center text-[#fff]">Daftar Sekarang</Link>
+                            <Link href="/register" className=" bg-blue-600 hover:bg-blue-700 transition-all py-3 px-7 rounded-2xl text-center text-[#fff]">Daftar Sekarang</Link>
                         </div>
                     </div>
                 </div>
@@ -117,7 +111,7 @@ const StudentAdmission = () => {
                 <li>Melihat Pengumuman PPDB di SMK SORE Tulungagung</li>
                 <li>Proses Daftar Ulang di SMK SORE Tulungagung</li>
             </ol>
-        </Layout>
+        </Guest>
     );
 }
 

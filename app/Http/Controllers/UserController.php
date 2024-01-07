@@ -5,65 +5,52 @@ namespace App\Http\Controllers;
 use App\Models\Fathers;
 use App\Models\Mothers;
 use App\Models\Schools;
-use App\Models\User;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
+
 
 class UserController extends Controller
 {
-    public function index(Request $request)
+    public function edit(Request $request)
     {
         $user = $request->user();
-        $user->mother;
-        $user->father;
-        $user->school;
-        return response()->json([
-            "status_code" => 200,
-            "user" => $user
-        ], 200);
+
+        if ($user->step_1 == "true") return Redirect::route('dashboard');
+
+        return Inertia::render('EditBiodata');
     }
 
-    public function update(Request $request, User $user)
+    public function update(Request $request): RedirectResponse
     {
-        $mother = Mothers::create([
-            "name" => "tes",
-            "income" => "tes",
-            "education" => "tes",
-            "phone" => "22222"
-        ]);
-        $user->mother()->associate($mother)->save();
+        $user = $request->user();
+        $mother = Mothers::create($request->mother);
 
-        $mother = Fathers::create([
-            "name" => "tes",
-            "income" => "tes",
-            "education" => "tes",
-            "phone" => "22222"
-        ]);
-        $user->mother()->associate($mother)->save();
+        $father = Fathers::create($request->father);
 
-        $school = Schools::where('name', $request->school->name)->first();
+
+        $school = Schools::where('name', $request->school)->first();
         if ($school == null) {
-            Schools::create([
-                'name' => $request->name,
+            $school = Schools::create([
+                'name' => $request->school,
             ]);
         }
-        $user->school()->associate($school)->save();
 
         $user->update([
-            $request->only('nik', 'date_birthday', 'birth_place', 'province', 'city', 'subdistrict', 'village', 'address', 'postal_code', 'number_child', 'number_siblings', 'graduation_year')
+            "id_father"     => $father->id,
+            "id_mother"     => $mother->id,
+            "id_school"     => $school->id,
+            "date_birthday" => $request->date_birthday,
+            "birth_place"   => $request->birth_place,
+            "province"      => $request->province,
+            "city"          => $request->city,
+            "subdistrict"   => $request->subdistrict,
+            "village"       => $request->village,
+            "address"       => $request->address,
+            "step_1" => "true"
         ]);
 
-        return response()->json([
-            "status_code" => 200,
-            "message" => "data berhasil di update"
-        ], 200);
-    }
-    
-    public function destroy(User $user)
-    {
-        $user->tokens()->delete();
-        return response()->json([
-            "status_code" => 200,
-            "message" => "logout berhasil"
-        ], 200);
+        return Redirect::route('dashboard');
     }
 }

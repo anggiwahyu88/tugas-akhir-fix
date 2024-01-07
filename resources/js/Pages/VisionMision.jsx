@@ -1,8 +1,8 @@
-import Layout from "../../Layout/Layout";
+import Guest from '@/Layouts/GuestLayout';
 
 const VisionMision = () => {
     return (
-        <Layout title={"Visi dan Misi"}>
+        <Guest title={"Visi dan Misi"}>
             <div className="text-justify">
                 <h3 className="font-semibold my-4 text-xl">Visi Sekolah</h3>
                 <p>Menjadi Sekolah Besar, berkompetisi global dan berakhlakul karimah</p>
@@ -28,7 +28,7 @@ const VisionMision = () => {
                     <li>Menyiapkan siswa yang masih ingin melanjutkan ke jenjang pendidikan yang lebih tinggi.</li>
                 </ul>
             </div>
-        </Layout>
+        </Guest>
     );
 }
 

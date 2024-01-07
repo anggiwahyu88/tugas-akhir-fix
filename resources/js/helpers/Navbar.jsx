@@ -1,11 +1,13 @@
 import { Link } from '@inertiajs/react'
 import { useEffect, useState } from "react";
 import { major } from "../helpers/data/major.json";
+import { usePage } from "@inertiajs/react"
 import NavbarMobile from "./NavbarMobile";
 
 const Navbar = () => {
     const [menu, setMenu] = useState(false)
     const [isMenu, setIsMenu] = useState(false)
+    const { auth } = usePage().props
 
     useEffect(() => {
         if (menu) {
@@ -97,6 +99,15 @@ const Navbar = () => {
                         <div className="flex items-center gap-1 p-2">
                             <Link href={"/faqs"} className="hover:text-thirty transition-all duration-200 p-2">FAQs</Link>
                         </div>
+                        {auth.user ?
+                            <div className="flex items-center gap-1 p-2">
+                                <Link href={"/dashboard"} className="hover:text-thirty transition-all duration-200 p-2">Dashboard</Link>
+                            </div>
+                            :
+                            <div className="flex items-center gap-1 p-2">
+                                <Link href={"/login"} className="hover:text-thirty transition-all duration-200 p-2">Login</Link>
+                            </div>
+                        }
                     </div>
                     <div className="block lg:hidden my-3">
                         <button onClick={() => setMenu(true)} aria-label="menu">

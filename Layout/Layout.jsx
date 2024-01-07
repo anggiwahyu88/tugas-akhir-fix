@@ -19,8 +19,8 @@ const Layout = ({ children, title }) => {
             </div>
             <main>
                 {title ?
-                    <div className="bg-primary  pt-32 pb-8 text-center text-2xl text-my-white font-semibold">
-                        <h1>{title}</h1>
+                    <div className="bg-primary pt-32 pb-8 text-center text-3xl text-my-white font-semibold">
+                        <h1 className="text-3">{title}</h1>
                     </div>
                     : ""
                 }

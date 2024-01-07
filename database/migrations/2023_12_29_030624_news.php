@@ -21,7 +21,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign("id_category")->references("id")->on("news_categorys");
-            $table->foreign("id_author")->references("id")->on("admins");
+            $table->foreign("id_author")->references("id")->on("users");
         });
     }
 

@@ -1,8 +1,8 @@
-import Layout from "../../Layout/Layout";
+import Guest from '@/Layouts/GuestLayout';
 
 const History = () => {
     return (
-        <Layout title={"Sejarah SMK SORE Tulungagung"}>
+        <Guest title={"Sejarah SMK SORE Tulungagung"} >
             <div className="text-justify ">
                 <p>
                     SMK “SORE” Tulungagung didirikan tahun 1975, pada awalnya bernama Sekolah Teknologi Menengah “SORE” (STM “SORE”) Tulungagung dan menempati lokasi Jl. KH Agus Salim No. 11 Tulungagung bekas gedung sekolah Cina (Chong Wha – Chong Whi) bersebelahan dengan STM Negeri Tulungagung dan Institut Agama Islam Negeri Tulungagung (IAIN) serta Madrasah Aliyah Negeri Tulungagung (MAN).
@@ -19,7 +19,7 @@ const History = () => {
                 <p> <b>Drs. Hamid Manan, M.M.:</b> mulai tahun 2008 s.d. 2017</p>
                 <p><b>Drs. Masdugi:</b> mulai tahun 2017 s.d. sekarang</p>
             </div>
-        </Layout>
+        </Guest>
     );
 }
 

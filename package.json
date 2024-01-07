@@ -20,5 +20,8 @@
     "dev": "vite",
     "build": "vite build"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "react-quill": "^2.0.0"
+  }
 }

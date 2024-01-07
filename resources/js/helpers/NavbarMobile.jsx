@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import { router, usePage } from "@inertiajs/react"
 import SubMenu from "./SubMenu";
 
-const NavbarMobile = ({ menu, setMenu }) => {
+const NavbarMobile = ({ menu, setMenu, }) => {
     const [isMenu, setIsMenu] = useState(menu)
+    const { auth } = usePage().props
     const [isSubMenu, setIsSubMenu] = useState({
         isActive: false,
         name: "",
@@ -12,7 +14,6 @@ const NavbarMobile = ({ menu, setMenu }) => {
         if (menu) {
             setTimeout(() => {
                 setIsMenu(true)
-
             }, 1000);
         } else {
             setIsMenu(false)
@@ -20,8 +21,8 @@ const NavbarMobile = ({ menu, setMenu }) => {
     }, [menu])
 
     const habdlePath = (path) => {
-        setMenu(fasle)
-        route(path)
+        setMenu(false)
+        router.get(path)
     }
 
     return (
@@ -69,6 +70,19 @@ const NavbarMobile = ({ menu, setMenu }) => {
                                 Faqs
                             </p>
                         </button>
+                        {
+                            auth.user ?
+                                <button onClick={() => habdlePath("dashboard")} className="w-full flex items-center justify-between px-4 py-2 text-gray-100 hover:bg-gray-700">
+                                    <p>
+                                        Dashboard
+                                    </p>
+                                </button> :
+                                <button onClick={() => habdlePath("login")} className="w-full flex items-center justify-between px-4 py-2 text-gray-100 hover:bg-gray-700">
+                                    <p>
+                                        Login
+                                    </p>
+                                </button>
+                        }
                     </nav>
                 </div>
             </div >

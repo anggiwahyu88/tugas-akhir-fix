@@ -1,18 +1,45 @@
-import { useEffect } from 'react';
-import GuestLayout from '@/Layouts/GuestLayout';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Link, useForm } from "@inertiajs/react";
+import Guest from '@/Layouts/GuestLayout';
+import Input from "@/Components/Input";
+import Label from "@/Components/Label";
+import { useEffect } from "react";
+import InputError from "@/Components/InputError";
+import Dropdown from "@/helpers/Dropdown";
 
-export default function Register() {
+const Register = () => {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
+        pin: '',
         email: '',
+        gender: '',
+        phone: '',
         password: '',
         password_confirmation: '',
     });
+
+    useEffect(() => {
+        console.log(errors);
+    }, [errors])
+
+    const listGender = [
+        {
+            title: "::Plilih Jenis Kelamin::",
+            value: "DEFAULT"
+        },
+        {
+            title: "laki-laki",
+            value: "male"
+        },
+        {
+            title: "perempuan",
+            value: "female"
+        }
+    ]
+
+    const submit = async (e) => {
+        e.preventDefault()
+        post(route('register'));
+    }
 
     useEffect(() => {
         return () => {
@@ -20,98 +47,72 @@ export default function Register() {
         };
     }, []);
 
-    const submit = (e) => {
-        e.preventDefault();
-
-        post(route('register'));
-    };
-
     return (
-        <GuestLayout>
-            <Head title="Register" />
+        <Guest title={"Pembuatan Akun"}>
+            <div className="flex min-h-full flex-col justify-center px-6 py-6 lg:px-8">
+                <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+                    <form className="space-y-6" onSubmit={submit}>
+                        <div>
+                            <Label htmlFor={"Pin"} className={"block text-sm leading-6 text-gray-900"}>
+                                Pin
+                            </Label>
+                            <Input className="my-2" name={"Pin"} type={"number"} value={data.pin} onChange={(e) => setData('pin', e.target.value)} err={errors.pin}/>
+                        </div>
+                        <div>
+                            <Label htmlFor={"Nama lengkap"} className={"block text-sm leading-6 text-gray-900"}>
+                                Nama Lengkap
+                            </Label>
+                            <Input className="my-2" name={"Nama lengkap"} type={"text"} value={data.name} onChange={(e) => setData('name', e.target.value)} err={errors.name}/>
+                        </div>
+                        <div>
+                            <Label htmlFor={"Email"} className={"block text-sm leading-6 text-gray-900"}>
+                                Eamil
+                            </Label>
+                            <Input className="my-2" name={"Email"} type={"email"} value={data.email} onChange={(e) => setData('email', e.target.value)} err={errors.email}/>
+                        </div>
+                        <div>
+                            <Label htmlFor={"Jenis Kelamin"} className={"block text-sm leading-6 text-gray-900"}>
+                                Pilih Jenis Kelamin
+                            </Label>
+                            <Dropdown name={"Jenis Kelamin"} value={listGender} onChange={(e) => setData('gender', e.target.value)} />
+                        </div>
+                        <div>
+                            <Label htmlFor={"No HP"} className={"block text-sm leading-6 text-gray-900"}>
+                                No. HP Aktif (Whatsapp)
+                            </Label>
+                            <Input className="my-2" name={"No HP"} type={"number"} value={data.phone} onChange={(e) => setData('phone', e.target.value)} err={errors.phone}/>
+                        </div>
+                        <div>
+                            <Label htmlFor={"Password"} className={"block text-sm leading-6 text-gray-900"}>
+                                Password
+                            </Label>
+                            <Input className="my-2" name={"Password"} type={"password"} value={data.password} onChange={(e) => setData('password', e.target.value)} err={errors.password}/>
+                        </div>
+                        <div>
+                            <Label htmlFor={"Ulangi password"} className={"block text-sm leading-6 text-gray-900"}>
+                                Ulangi Password
+                            </Label>
+                            <Input className="my-2" label={"Ulangi Password"} name={"Ulangi password"} type={"password"} value={data.password_confirmation} onChange={(e) => setData('password_confirmation', e.target.value)} err={errors.password_confirmation}/>
+                        </div>
 
-            <form onSubmit={submit}>
-                <div>
-                    <InputLabel htmlFor="name" value="Name" />
+                        <div>
+                            {/* {
+                                errMsg ?
+                                    <p className="text-sm text-center text-red-600 mt-0 my-2 capitalize">{errMsg}</p>
+                                    : ""
+                            } */}
+                            <button type="submit" className="flex w-full justify-center rounded-md bg-blue-600 px-3 py-1.5 text-sm font-semibold leading-6 text-my-white shadow-sm transition-all duration-300 hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">Daftar</button>
+                        </div>
+                    </form>
 
-                    <TextInput
-                        id="name"
-                        name="name"
-                        value={data.name}
-                        className="mt-1 block w-full"
-                        autoComplete="name"
-                        isFocused={true}
-                        onChange={(e) => setData('name', e.target.value)}
-                        required
-                    />
-
-                    <InputError message={errors.name} className="mt-2" />
+                    <p className="mt-10 text-center text-base text-gray-500">
+                        Sudah Punya Akun?
+                        <Link href={route("login")} className="font-semibold mx-2 leading-6 text-blue-600 hover:text-blue-500">Login</Link>
+                    </p>
                 </div>
-
-                <div className="mt-4">
-                    <InputLabel htmlFor="email" value="Email" />
-
-                    <TextInput
-                        id="email"
-                        type="email"
-                        name="email"
-                        value={data.email}
-                        className="mt-1 block w-full"
-                        autoComplete="username"
-                        onChange={(e) => setData('email', e.target.value)}
-                        required
-                    />
-
-                    <InputError message={errors.email} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
-
-                    <TextInput
-                        id="password"
-                        type="password"
-                        name="password"
-                        value={data.password}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        onChange={(e) => setData('password', e.target.value)}
-                        required
-                    />
-
-                    <InputError message={errors.password} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel htmlFor="password_confirmation" value="Confirm Password" />
-
-                    <TextInput
-                        id="password_confirmation"
-                        type="password"
-                        name="password_confirmation"
-                        value={data.password_confirmation}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        onChange={(e) => setData('password_confirmation', e.target.value)}
-                        required
-                    />
-
-                    <InputError message={errors.password_confirmation} className="mt-2" />
-                </div>
-
-                <div className="flex items-center justify-end mt-4">
-                    <Link
-                        href={route('login')}
-                        className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    >
-                        Already registered?
-                    </Link>
-
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Register
-                    </PrimaryButton>
-                </div>
-            </form>
-        </GuestLayout>
+            </div>
+        </Guest>
     );
 }
+
+export default Register;

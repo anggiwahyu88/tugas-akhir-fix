@@ -1,13 +1,11 @@
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { alumni } from "../helpers/data/alumni.json";
-import { news } from "../helpers/data/news.json";
 import { Link } from "@inertiajs/react";
 import Marquee from "react-fast-marquee";
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import Guest from '@/Layouts/GuestLayout';
 
-function App() {
-
+function App({ news }) {
     return (
         <Guest>
             <section className={`h-screen bg-center bg-cover bg-no-repeat transition-all`} style={{ backgroundImage: "url('/storage/hixbd8bp6d.png')" }}>
@@ -50,13 +48,14 @@ function App() {
                     </div>
                     <div className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-4 md:gap-4">
                         {news.map((data, i) => {
+                            console.log(data);
                             return (
                                 <div key={i}>
                                     <LazyLoadImage
-                                        alt={""}
+                                        alt={data.title}
                                         effect="blur"
-                                        src={data.thumbnail}
-                                        className="h-40 w-96"
+                                        src={`/storage/${data.thumnil}`}
+                                        className="h-36 w-96"
                                     />
                                     <p className="py-4 text-xl">
                                         {data.title}

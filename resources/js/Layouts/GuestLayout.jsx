@@ -1,7 +1,7 @@
 import Footer from "@/helpers/Footer";
 import Navbar from "@/helpers/Navbar";
 
-export default function Guest({ children,title }) {
+export default function Guest({ children, title }) {
     const msg = () => {
         open("https://api.whatsapp.com/send?phone=6282126667773", "_blank")
     }
@@ -19,7 +19,7 @@ export default function Guest({ children,title }) {
             </div>
             <main>
                 {title ?
-                    <div className="bg-primary  pt-32 pb-8 text-center text-2xl text-my-white font-semibold">
+                    <div className="bg-primary pt-32 pb-8 text-center text-3xl text-my-white font-semibold">
                         <h1>{title}</h1>
                     </div>
                     : ""
