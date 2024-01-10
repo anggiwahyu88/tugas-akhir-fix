@@ -4,7 +4,6 @@ import { Link, usePage } from "@inertiajs/react";
 const UserLayout = ({ children }) => {
     const [menu, setMenu] = useState(false)
     const { auth } = usePage().props
-    console.log(auth);
 
     return (
         <div className="flex h-screen bg-gray-100">
@@ -31,10 +30,20 @@ const UserLayout = ({ children }) => {
                         </Link>
                         {
                             auth.user.is_admin == "true" ?
-                                <Link href="/dashboard/news" className="flex items-center px-4 py-2 mt-2 text-gray-100 hover:bg-gray-700">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 256 256"><path d="M224,152v56a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V152a8,8,0,0,1,16,0v56H208V152a8,8,0,0,1,16,0ZM93.66,85.66,120,59.31V152a8,8,0,0,0,16,0V59.31l26.34,26.35a8,8,0,0,0,11.32-11.32l-40-40a8,8,0,0,0-11.32,0l-40,40A8,8,0,0,0,93.66,85.66Z"></path></svg>
-                                    Upload News
-                                </Link>
+                                <>
+                                    <Link href={route("news.store")} className="flex items-center px-4 py-2 mt-2 text-gray-100 hover:bg-gray-700">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 256 256"><path d="M224,152v56a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V152a8,8,0,0,1,16,0v56H208V152a8,8,0,0,1,16,0ZM93.66,85.66,120,59.31V152a8,8,0,0,0,16,0V59.31l26.34,26.35a8,8,0,0,0,11.32-11.32l-40-40a8,8,0,0,0-11.32,0l-40,40A8,8,0,0,0,93.66,85.66Z"></path></svg>
+                                        Upload News
+                                    </Link>
+                                    <Link href={route("news.index")}className="flex items-center px-4 py-2 mt-2 text-gray-100 hover:bg-gray-700">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 256 256"><path d="M136,80v43.47l36.12,21.67a8,8,0,0,1-8.24,13.72l-40-24A8,8,0,0,1,120,128V80a8,8,0,0,1,16,0Zm88-24a8,8,0,0,0-8,8V82c-6.35-7.36-12.83-14.45-20.12-21.83a96,96,0,1,0-2,137.7,8,8,0,0,0-11-11.64A80,80,0,1,1,184.54,71.4C192.68,79.64,199.81,87.58,207,96H184a8,8,0,0,0,0,16h40a8,8,0,0,0,8-8V64A8,8,0,0,0,224,56Z"></path></svg>
+                                        Update News
+                                    </Link>
+                                    <Link href="/dashboard/pin" className="flex items-center px-4 py-2 mt-2 text-gray-100 hover:bg-gray-700">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 256 256"><path d="M224,152v56a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V152a8,8,0,0,1,16,0v56H208V152a8,8,0,0,1,16,0ZM93.66,85.66,120,59.31V152a8,8,0,0,0,16,0V59.31l26.34,26.35a8,8,0,0,0,11.32-11.32l-40-40a8,8,0,0,0-11.32,0l-40,40A8,8,0,0,0,93.66,85.66Z"></path></svg>
+                                        Upload Pin
+                                    </Link>
+                                </>
                                 : ""
                         }
                         <Link href={route('logout')} method="post" as="button" className="flex items-center px-4 py-2 mt-2 text-gray-100 hover:bg-gray-700 w-full">

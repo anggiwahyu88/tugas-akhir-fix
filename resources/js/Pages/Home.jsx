@@ -47,20 +47,21 @@ function App({ news }) {
                         <h3 className="text-4xl">News Update</h3>
                     </div>
                     <div className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-4 md:gap-4">
-                        {news.map((data, i) => {
-                            console.log(data);
+                        {news.data.map((data, i) => {
                             return (
-                                <div key={i}>
-                                    <LazyLoadImage
-                                        alt={data.title}
-                                        effect="blur"
-                                        src={`/storage/${data.thumnil}`}
-                                        className="h-36 w-96"
-                                    />
+                                <Link href={`/news/${data.id}`} key={i}>
+                                    <div className='h-44 w-80 bg-gray-100 flex justify-center'>
+                                        <LazyLoadImage
+                                            alt={data.title}
+                                            effect="blur"
+                                            src={`/storage/${data.thumnil}`}
+                                            className='h-full object-cover'
+                                        />
+                                    </div>
                                     <p className="py-4 text-xl">
                                         {data.title}
                                     </p>
-                                </div>
+                                </Link>
                             )
                         })}
                     </div>
@@ -75,7 +76,7 @@ function App({ news }) {
                             <h4>Kami berkomitmen untuk membentuk Peserta Didik</h4>
                             <h4> Disiplin, Berakhlaqul Karimah, & Siap Kerja</h4>
                         </div>
-                        <Link href="/student-admission" className="w-44 bg-blue-600 hover:bg-blue-700 transition-all text-my-white py-3 rounded-2xl mt-6 text-center">Daftar Sekarang</Link>
+                        <Link href="/student-admission" className="w-44 bg-blue-600 hover:bg-blue-700 transition-all text-my-white py-3 rounded-2xl mt-8 text-center">Daftar Sekarang</Link>
                     </div>
                 </div>
             </section>
@@ -117,7 +118,7 @@ function App({ news }) {
             </section>
 
             <section className="mt-5 bg-primary  flex justify-center">
-                <div className="w-full h-full max-w-6xl mx-2 px-2 lg:px-0">
+                <div className="w-full h-full max-w-6xl my-6 mx-2 px-2 lg:px-0">
                     <h3 className="text-center text-my-white text-3xl font-bold p-4">Alumni SMK SORE</h3>
                     <div className="grid grid-cols-1 grid-flow-row md:grid-cols-2 gap-4 justify-center">
                         {alumni.map((data, i) => {

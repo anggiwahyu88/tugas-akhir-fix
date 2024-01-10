@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\NewsCollection;
 use App\Models\News;
 use App\Models\News_categorys;
 use Illuminate\Http\Request;
@@ -16,7 +17,11 @@ class NewsController extends Controller
      */
     public function index()
     {
-        return Inertia::render('News');
+        $news = News::all();
+        $news_collection = NewsCollection::collection($news->loadMissing('author:id,name,email', 'category'));
+        return Inertia::render('NewsUpdate', [
+            "news" => $news_collection
+        ]);
     }
 
     /**
@@ -39,15 +44,7 @@ class NewsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(News $news)
+    public function store()
     {
         $option = [[
             "title" => "::Pilih Category::",
@@ -60,8 +57,19 @@ class NewsController extends Controller
                 "value" => $value->id,
             ]);
         };
-        return Inertia::render('News', [
+        return Inertia::render('FormNews', [
             "option" => $option,
+        ]);
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(News $news)
+    {
+        $news_collection = new NewsCollection($news->loadMissing('author:id,name,email', 'category'));
+        return Inertia::render('News', [
+            "news" => $news_collection,
         ]);
     }
 
@@ -70,7 +78,21 @@ class NewsController extends Controller
      */
     public function edit(News $news)
     {
-        //
+        $option = [[
+            "title" => "::Pilih Category::",
+            "value" => "DEFAULT",
+        ]];
+        $category = News_categorys::all();
+        foreach ($category as $key => $value) {
+            array_push($option, [
+                "title" => $value->name,
+                "value" => $value->id,
+            ]);
+        };
+        return Inertia::render('FormNews', [
+            "option" => $option,
+            "news" => $news,
+        ]);
     }
 
     /**
@@ -78,7 +100,12 @@ class NewsController extends Controller
      */
     public function update(Request $request, News $news)
     {
-        //
+        $news->update([
+            "title"=>$request->title,
+            "content"=>$request->content,
+            "id_category"=>$request->category,
+        ]);
+        return Redirect::route('dashboard');
     }
 
     /**

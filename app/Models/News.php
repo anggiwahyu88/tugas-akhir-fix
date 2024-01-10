@@ -10,14 +10,12 @@ class News extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
-    public $timestamps = false;
-
     public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'id_author', 'id');
     }
     public function category(): BelongsTo
     {
-        return $this->belongsTo(News_category::class, 'id_category', 'id');
+        return $this->belongsTo(News_categorys::class, 'id_category', 'id');
     }
 }
