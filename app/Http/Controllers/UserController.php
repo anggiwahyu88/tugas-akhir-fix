@@ -8,6 +8,7 @@ use App\Models\Schools;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 
@@ -29,13 +30,7 @@ class UserController extends Controller
 
         $father = Fathers::create($request->father);
 
-
-        $school = Schools::where('name', $request->school)->first();
-        if ($school == null) {
-            $school = Schools::create([
-                'name' => $request->school,
-            ]);
-        }
+        $school = Schools::firstOrCreate(['name' => $request->school]);
 
         $user->update([
             "id_father"     => $father->id,
@@ -52,5 +47,16 @@ class UserController extends Controller
         ]);
 
         return Redirect::route('dashboard');
+    }
+
+    public function destroy(Request $request)
+    {
+        Auth::guard('web')->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/');
     }
 }

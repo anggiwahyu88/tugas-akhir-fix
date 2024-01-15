@@ -1,28 +1,17 @@
 import { Link } from '@inertiajs/react'
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { major } from "../helpers/data/major.json";
 import { usePage } from "@inertiajs/react"
 import NavbarMobile from "./NavbarMobile";
 
 const Navbar = () => {
     const [menu, setMenu] = useState(false)
-    const [isMenu, setIsMenu] = useState(false)
     const { auth } = usePage().props
-
-    useEffect(() => {
-        if (menu) {
-            setTimeout(() => {
-                setIsMenu(true)
-            }, 1000);
-        } else {
-            setIsMenu(false)
-        }
-    }, [menu])
 
     return (
         <header>
             <NavbarMobile menu={menu} setMenu={setMenu} />
-            <div className={`absolute w-full top-0 bg-primary justify-center text-my-white transition-all lg:flex ${isMenu ? "hidden" : "flex"}`}>
+            <div className={`flex absolute w-full top-0 bg-primary justify-center text-my-white transition-all lg:flex  ${menu ? "delay-1000 opacity-0" : "opacity-100"}`}>
                 <div className="w-full flex justify-between max-w-6xl px-2 lg:px-0">
                     <div className="w-[70%] text-xs  flex justify-center items-center gap-3 md:text-lg md:justify-normal">
                         <div>info</div>
@@ -59,7 +48,7 @@ const Navbar = () => {
                 </div>
             </div>
 
-            <div className={`absolute top-[48px] w-full flex justify-center items-center bg-transparent transition-all lg:flex ${isMenu ? "hidden" : "flex"}`}>
+            <div className={`flex absolute top-[48px] w-full flex justify-center items-center bg-transparent transition-all duration-300 lg:flex  ${menu ? "delay-1000 opacity-0" : "opacity-100"}`}>
                 <div className="w-full h-full flex justify-between items-center max-w-6xl px-2 lg:px-0">
                     <div className="flex gap-2">
                         <img src="/storage/logo-smk-sore.webp" alt="" className="h-10 w-10" />

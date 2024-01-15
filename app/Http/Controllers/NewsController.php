@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
 
 class NewsController extends Controller
 {
@@ -31,13 +33,16 @@ class NewsController extends Controller
     {
         $user = $request->user();
         $image_path = $request->file('thumnil')->store('thumnil', 'public');
-        News::create([
+        $data[] = [
             'thumnil' => $image_path,
             'title' => $request->title,
             'content' => $request->content,
             'id_category' => $request->category,
             'id_author' => $user->id,
-        ]);
+        ];
+        foreach (array_chunk($data, 3) as $item) {
+            News::insert($item);
+        }
         return Redirect::route('dashboard');
     }
 
@@ -50,8 +55,12 @@ class NewsController extends Controller
             "title" => "::Pilih Category::",
             "value" => "DEFAULT",
         ]];
-        $category = News_categorys::all();
-        foreach ($category as $key => $value) {
+        $category = Cache::get('category');
+        if ($category == null) {
+            $category = News_categorys::all();
+            Cache::put('category', $category, 300);
+        }
+        foreach ($category as  $value) {
             array_push($option, [
                 "title" => $value->name,
                 "value" => $value->id,
@@ -65,8 +74,9 @@ class NewsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(News $news)
+    public function show($id)
     {
+        $news = News::findorfail($id);
         $news_collection = new NewsCollection($news->loadMissing('author:id,name,email', 'category'));
         return Inertia::render('News', [
             "news" => $news_collection,
@@ -76,14 +86,19 @@ class NewsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(News $news)
+    public function edit($id)
     {
+        $news = News::findorfail($id);
         $option = [[
             "title" => "::Pilih Category::",
             "value" => "DEFAULT",
         ]];
-        $category = News_categorys::all();
-        foreach ($category as $key => $value) {
+        $category = Cache::get('category');
+        if ($category == null) {
+            $category = News_categorys::all();
+            Cache::put('category', $category, 300);
+        }
+        foreach ($category as $value) {
             array_push($option, [
                 "title" => $value->name,
                 "value" => $value->id,
@@ -98,12 +113,13 @@ class NewsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, News $news)
+    public function update(Request $request, $id)
     {
+        $news = News::findorfail($id);
         $news->update([
-            "title"=>$request->title,
-            "content"=>$request->content,
-            "id_category"=>$request->category,
+            "title" => $request->title,
+            "content" => $request->content,
+            "id_category" => $request->category,
         ]);
         return Redirect::route('dashboard');
     }
@@ -111,8 +127,11 @@ class NewsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(News $news)
+    public function destroy($id)
     {
-        //
+        $news = News::findorfail($id);
+        Storage::delete('public/' . $news->thumnil . '');
+        $news->delete();
+        return Redirect::route('dashboard');
     }
 }

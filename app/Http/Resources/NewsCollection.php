@@ -14,16 +14,14 @@ class NewsCollection extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $path = $request->path();
-        $check_path = $path != "/" && $path != "dashboard/news/update";
         return [
             "id" => $this->id,
             "title" => $this->title,
-            "content" => $this->when($check_path, $this->content),
-            "thumnil" => $this->when($path != "dashboard/news/update", $this->thumnil),
+            "content" => $this->whenLoaded('content'),
+            "thumnil" => $this->whenLoaded('thumnil'),
             "category" => $this->whenLoaded('category'),
             "author" => $this->whenLoaded('author'),
-            "created_at" => $this->when($check_path, $this->created_at),
+            "created_at" => $this->whenLoaded('created_at'),
         ];
     }
 }

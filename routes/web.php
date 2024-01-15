@@ -24,7 +24,7 @@ use App\Models\News;
 */
 
 Route::get('/', function () {
-    $news = NewsCollection::collection(News::all());
+    $news = News::limit(6)->select('id', 'title', 'thumnil')->get();
     return Inertia::render('Home', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
@@ -48,7 +48,7 @@ Route::get('/jurusan/{nickname}', function ($nickname) {
 Route::get('/student-admission', function () {
     return Inertia::render('StudentAdmission');
 });
-Route::get('/news/{news}', [NewsController::class, 'show'])->name("news.show");
+Route::get('/news/{id}', [NewsController::class, 'show'])->name("news.show");
 
 
 
@@ -59,22 +59,24 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    
+    Route::post('/logout', [UserController::class, 'destroy'])->name('logout');
     Route::get('/dashboard/biodata', [UserController::class, 'edit'])->name("user.edit");
     Route::put('/dashboard/biodata', [UserController::class, 'update'])->name("user.update");
-    
+
     Route::get('/dashboard/rapor', [RaporController::class, 'show'])->name("rapor.show");
     Route::post('/dashboard/rapor', [RaporController::class, 'create'])->name("rapor.create");
 
     Route::get('/dashboard/jurusan', [MajorController::class, 'show'])->name("major.show");
     Route::post('/dashboard/jurusan', [MajorController::class, 'create'])->name("major.create");
-
-    Route::get('/dashboard/news/upload', [NewsController::class, 'store'])->name("news.store");
-    Route::post('/dashboard/news/upload', [NewsController::class, 'create'])->name("news.create");
+    
     Route::get('/dashboard/news', [NewsController::class, 'index'])->name("news.index");
-    Route::get('/dashboard/news/update/{news}', [NewsController::class, 'edit'])->name("news.edit");
-    Route::put('/dashboard/news/update/{news}', [NewsController::class, 'update'])->name("news.update");
+    Route::get('/dashboard/news/upload', [NewsController::class, 'store'])->name("news.store");
+    Route::post('/dashboard/news', [NewsController::class, 'create'])->name("news.create");
+    Route::get('/dashboard/news/{id}', [NewsController::class, 'edit'])->name("news.edit");
+    Route::put('/dashboard/news/{id}', [NewsController::class, 'update'])->name("news.update");
+    Route::delete('/dashboard/news/{id}', [NewsController::class, 'destroy'])->name("news.destroy");
 
     Route::get('/dashboard/pin', [PinController::class, 'store'])->name("pin.store");
     Route::post('/dashboard/pin', [PinController::class, 'create'])->name("pin.create");

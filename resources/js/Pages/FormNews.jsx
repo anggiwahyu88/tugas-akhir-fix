@@ -32,7 +32,6 @@ const FormNews = ({ option, news }) => {
         ]
     };
 
-
     const { data, setData, post, put, processing, errors } = useForm({
         title: news?.title || "",
         thumnil: "",
@@ -40,10 +39,14 @@ const FormNews = ({ option, news }) => {
         category: news?.id_category || "",
     });
 
+    let urlImg
+    if (!data.thumnil && news?.thumnil) urlImg = `/storage/${news.thumnil}`
+    else if (news?.thumnil) urlImg = URL?.createObjectURL(data.thumnil)
+
     const submit = (e) => {
         e.preventDefault()
         if (news) {
-            put(route("news.update",news.id))
+            put(route("news.update", news.id))
         } else {
             post(route("news.create"))
         }
@@ -73,6 +76,13 @@ const FormNews = ({ option, news }) => {
                                     </Label>
                                 </div>
                                 <div className="md:col-span-3 col-span-4">
+                                    {urlImg
+                                        ?
+                                        <div className="w-40 md:mt-2">
+                                            <img src={urlImg} alt="thumnil" className="object-cover h-full w-full" />
+                                        </div>
+                                        : ""
+                                    }
                                     <Input type={"file"} accept="image/*" name={"thumnil"} onChange={(e) => setData('thumnil', e.target.files[0])} />
                                 </div>
                             </div>

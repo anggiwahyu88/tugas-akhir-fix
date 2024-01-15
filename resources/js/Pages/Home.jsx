@@ -6,6 +6,7 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 import Guest from '@/Layouts/GuestLayout';
 
 function App({ news }) {
+    console.log(news)
     return (
         <Guest>
             <section className={`h-screen bg-center bg-cover bg-no-repeat transition-all`} style={{ backgroundImage: "url('/storage/hixbd8bp6d.png')" }}>
@@ -43,14 +44,14 @@ function App({ news }) {
 
             <section className="w-full mt-5 flex justify-center">
                 <div className="max-w-6xl">
-                    <div className="py-8 px-4">
-                        <h3 className="text-4xl">News Update</h3>
+                    <div className="py-8">
+                        <h3 className="text-4xl font-semibold">News Update</h3>
                     </div>
-                    <div className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-4 md:gap-4">
-                        {news.data.map((data, i) => {
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {news.map((data, i) => {
                             return (
                                 <Link href={`/news/${data.id}`} key={i}>
-                                    <div className='h-44 w-80 bg-gray-100 flex justify-center'>
+                                    <div className='h-44 w-80 bg-gray-100 flex justify-center shadow-md'>
                                         <LazyLoadImage
                                             alt={data.title}
                                             effect="blur"
@@ -58,7 +59,7 @@ function App({ news }) {
                                             className='h-full object-cover'
                                         />
                                     </div>
-                                    <p className="py-4 text-xl">
+                                    <p className="py-4 text-2xl">
                                         {data.title}
                                     </p>
                                 </Link>
