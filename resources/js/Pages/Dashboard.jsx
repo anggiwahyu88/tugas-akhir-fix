@@ -1,11 +1,8 @@
 import { Link } from "@inertiajs/react";
 import UserLayout from "@/Layouts/UserLayout";
-// const ReactQuill = lazy(() => import('react-quill'));
-// import 'react-quill/dist/quill.snow.css'
 
 const Dashboard = ({ auth }) => {
     const user = auth.user
-
     const Icon = ({ step }) => {
         if (user[step] == "false") {
             return (
@@ -29,61 +26,67 @@ const Dashboard = ({ auth }) => {
 
     return (
         <UserLayout>
-            <div className="flex gap-4 justify-center flex-wrap px-4 py-6">
-                <div className={`rounded w-[26rem] h-56 flex flex-col border ${user.step_1 == "true" ? "border-green-600" : "border-yellow-500"}`}>
-                    <div className={`flex items-center p-3 text-white ${user.step_1 == "true" ? "bg-green-600" : "bg-yellow-500"}`}>
-                        <p className="mr-2 font-bold">1)</p>
-                        <Icon step={"step_1"}/>
-                        <p>Mengisi Biodata</p>
-                    </div>
-                    <div className="p-3 w-full h-full flex flex-col justify-between">
-                        <p>{
-                            user.step_1 == "true" ? "Data berhasil dikirim" : getBodyCard()
-                        }</p>
-                        <Link href={"/dashboard/biodata"} className={`text-center w-full py-1.5 border text-white ${user.step_1 == "true" ? "bg-green-600 border-green-700" : "bg-yellow-500 border-yellow-600"}`} disabled={user.step_1 == "true"} as="button">Lengkapi Biodata</Link>
-                    </div>
+            {
+                user.is_admin == "true" ?
+                <div className="mx-4 my-6 text-4xl font-semibold bg-green-600 text-white rounded-md px-4 py-8 shadow-md text-center">
+                    <h1>Selamat Datang ADMIN SMK Sore</h1>
                 </div>
-                <div className={`rounded w-[26rem] h-56 flex flex-col border ${user.step_2 == "true" ? "border-green-600" : "border-yellow-500"} ${user.step_1 == "false" ? "opacity-50" : ""}`}>
-                    <div className={`flex items-center p-3 text-white ${user.step_2 == "true" ? "bg-green-600" : "bg-yellow-500"}`}>
-                        <p className="mr-2 font-bold">2)</p>
-                        <Icon step={"step_2"}/>
-                        <p>Mengisi Nilai Rapor</p>
-                    </div>
-                    <div className="p-3 w-full h-full flex flex-col justify-between">
-                        <p>{
-                            user.step_2 == "true" ? "Data berhasil dikirim" : getBodyCard()
-                        }</p>
-                        <Link href={"/dashboard/rapor"} className={`text-center w-full py-1.5 border text-white ${user.step_2 == "true" ? "bg-green-600 border-green-700" : "bg-yellow-500 border-yellow-600"}`} disabled={user.step_1 == "false" || user.step_2 == "true"} as="button">Lengkapi Nilai Rapor</Link>
-                    </div>
-                </div>
-                <div className={`rounded w-[26rem] h-56 flex flex-col border ${user.step_3 == "true" ? "border-green-600" : "border-yellow-500"} ${user.step_2 == "false" ? "opacity-50" : ""}`}>
-                    <div className={`flex items-center p-3 text-white ${user.step_3 == "true" ? "bg-green-600" : "bg-yellow-500"}`}>
-                        <p className="mr-2 font-bold">3)</p>
-                        <Icon step={"step_3"}/>
-                        <p>Memilih Jurusan</p>
-                    </div>
-                    <div className="p-3 w-full h-full flex flex-col justify-between">
-                        <p>{
-                            user.step_3 == "true" ? "Data berhasil dikirim" : getBodyCard()
-                        }</p>
-                        <Link href={"/dashboard/jurusan"} className={`text-center w-full py-1.5 border text-white ${user.step_3 == "true" ? "bg-green-600 border-green-700" : "bg-yellow-500 border-yellow-600"}`} disabled={user.step_2 == "false" || user.step_3 == "true"} as="button">Pilih Jurusan</Link>
-                    </div>
-                </div>
-                <div className={`rounded w-[26rem] h-56 flex flex-col border ${user.step_3 == "true" ? "border-green-600" : "border-yellow-500 opacity-50"}`}>
-                    <div className={`flex items-center p-3 text-white ${user.step_3 == "true" ? "bg-green-600" : "bg-yellow-500"}`}>
-                        <p className="mr-2 font-bold">4)</p>
-                        <Icon step={"step_3"}/>
-                        <p>Lihat Hasil PPDB</p>
-                    </div>
-                    <div className="p-3 w-full h-full flex flex-col justify-between">
-                        <p>{
-                            user.step_3 == "true" ? "Data berhasil dikirim" : getBodyCard()
-                        }</p>
-                        <Link href={"/dashboard/biodata"} className={`text-center w-full py-1.5 border text-white ${user.step_3 == "true" ? "bg-green-600 border-green-700" : "bg-yellow-500 border-yellow-600"}`} disabled={user.step_3 == "false"} as="button">Pilih Jurusan</Link>
-                    </div>
-                </div>
-            </div>
-            
+                    :
+                    <div className="flex gap-4 justify-center flex-wrap px-4 py-6">
+                        <div className={`rounded w-[26rem] h-56 flex flex-col border ${user.step_1 == "true" ? "border-green-600" : "border-yellow-500"}`}>
+                            <div className={`flex items-center p-3 text-white ${user.step_1 == "true" ? "bg-green-600" : "bg-yellow-500"}`}>
+                                <p className="mr-2 font-bold">1)</p>
+                                <Icon step={"step_1"} />
+                                <p>Mengisi Biodata</p>
+                            </div>
+                            <div className="p-3 w-full h-full flex flex-col justify-between">
+                                <p>{
+                                    user.step_1 == "true" ? "Data berhasil dikirim" : getBodyCard()
+                                }</p>
+                                <Link href={"/dashboard/biodata"} className={`text-center w-full py-1.5 border text-white ${user.step_1 == "true" ? "bg-green-600 border-green-700" : "bg-yellow-500 border-yellow-600"}`} disabled={user.step_1 == "true"} as="button">Lengkapi Biodata</Link>
+                            </div>
+                        </div>
+                        <div className={`rounded w-[26rem] h-56 flex flex-col border ${user.step_2 == "true" ? "border-green-600" : "border-yellow-500"} ${user.step_1 == "false" ? "opacity-50" : ""}`}>
+                            <div className={`flex items-center p-3 text-white ${user.step_2 == "true" ? "bg-green-600" : "bg-yellow-500"}`}>
+                                <p className="mr-2 font-bold">2)</p>
+                                <Icon step={"step_2"} />
+                                <p>Mengisi Nilai Rapor</p>
+                            </div>
+                            <div className="p-3 w-full h-full flex flex-col justify-between">
+                                <p>{
+                                    user.step_2 == "true" ? "Data berhasil dikirim" : getBodyCard()
+                                }</p>
+                                <Link href={"/dashboard/rapor"} className={`text-center w-full py-1.5 border text-white ${user.step_2 == "true" ? "bg-green-600 border-green-700" : "bg-yellow-500 border-yellow-600"}`} disabled={user.step_1 == "false" || user.step_2 == "true"} as="button">Lengkapi Nilai Rapor</Link>
+                            </div>
+                        </div>
+                        <div className={`rounded w-[26rem] h-56 flex flex-col border ${user.step_3 == "true" ? "border-green-600" : "border-yellow-500"} ${user.step_2 == "false" ? "opacity-50" : ""}`}>
+                            <div className={`flex items-center p-3 text-white ${user.step_3 == "true" ? "bg-green-600" : "bg-yellow-500"}`}>
+                                <p className="mr-2 font-bold">3)</p>
+                                <Icon step={"step_3"} />
+                                <p>Memilih Jurusan</p>
+                            </div>
+                            <div className="p-3 w-full h-full flex flex-col justify-between">
+                                <p>{
+                                    user.step_3 == "true" ? "Data berhasil dikirim" : getBodyCard()
+                                }</p>
+                                <Link href={"/dashboard/jurusan"} className={`text-center w-full py-1.5 border text-white ${user.step_3 == "true" ? "bg-green-600 border-green-700" : "bg-yellow-500 border-yellow-600"}`} disabled={user.step_2 == "false" || user.step_3 == "true"} as="button">Pilih Jurusan</Link>
+                            </div>
+                        </div>
+                        <div className={`rounded w-[26rem] h-56 flex flex-col border ${user.step_3 == "true" ? "border-green-600" : "border-yellow-500 opacity-50"}`}>
+                            <div className={`flex items-center p-3 text-white ${user.step_3 == "true" ? "bg-green-600" : "bg-yellow-500"}`}>
+                                <p className="mr-2 font-bold">4)</p>
+                                <Icon step={"step_3"} />
+                                <p>Lihat Hasil PPDB</p>
+                            </div>
+                            <div className="p-3 w-full h-full flex flex-col justify-between">
+                                <p>{
+                                    user.step_3 == "true" ? "Data berhasil dikirim" : getBodyCard()
+                                }</p>
+                                <Link href={"/dashboard/biodata"} className={`text-center w-full py-1.5 border text-white ${user.step_3 == "true" ? "bg-green-600 border-green-700" : "bg-yellow-500 border-yellow-600"}`} disabled={user.step_3 == "false"} as="button">Pilih Jurusan</Link>
+                            </div>
+                        </div>
+                    </div>}
+
         </UserLayout>
     );
 }

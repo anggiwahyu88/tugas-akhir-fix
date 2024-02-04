@@ -6,7 +6,6 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 import Guest from '@/Layouts/GuestLayout';
 
 function App({ news }) {
-    console.log(news)
     return (
         <Guest>
             <section className={`h-screen bg-center bg-cover bg-no-repeat transition-all`} style={{ backgroundImage: "url('/storage/hixbd8bp6d.png')" }}>

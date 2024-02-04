@@ -14,7 +14,7 @@ class PasswordController extends Controller
 {
     public function store()
     {
-        return Inertia::render('ResetPassword');
+        return Inertia::render('Auth/UpdatePassword');
     }
     /**
      * Update the user's password.

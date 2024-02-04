@@ -17,11 +17,11 @@ class NewsCollection extends JsonResource
         return [
             "id" => $this->id,
             "title" => $this->title,
-            "content" => $this->whenLoaded('content'),
-            "thumnil" => $this->whenLoaded('thumnil'),
+            "content" => $this->content,
+            "thumnil" => $this->thumnil,
             "category" => $this->whenLoaded('category'),
             "author" => $this->whenLoaded('author'),
-            "created_at" => $this->whenLoaded('created_at'),
+            "created_at" => $this->created_at,
         ];
     }
 }

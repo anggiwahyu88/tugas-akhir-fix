@@ -1,77 +1,107 @@
-import { useNavigate } from "react-router-dom"
-import UserLayout from "../../../../Layout/UserLayout";
-import TablePerent from "./TablePerent";
-import Input from "../../../Libs/Input";
-import Label from "../../../Libs/Label"
+import UserLayout from "@/Layouts/UserLayout";
+import TablePerent from "@/Components/TablePerent";
+import Input from "@/Components/Input";
+import Label from "@/Components/Label";
+import { useForm, router } from "@inertiajs/react"
+import Dropdown from "@/Components/Dropdown";
 import { useEffect, useState } from "react";
-import { api } from "../../../../Libs/api/api";
+import Button from "@/Components/Button";
 
-const EditBiodata = () => {
-    const navigate = useNavigate()
-    const [loading, setLoading] = useState(true)
-    const [email, setEmail] = useState("")
-    const [name, setName] = useState("")
-    const [phone, setPhone] = useState("")
-    const [birth_place, setbirth_place] = useState("")
-    const [date_birthday, setdate_birthday] = useState("")
-    const [scholl, setscholl] = useState("")
-    const [province, setprovince] = useState("")
-    const [city, setcity] = useState("")
-    const [subdistrict, setsubdistrict] = useState("")
-    const [village, setvillage] = useState("")
-    const [address, setaddress] = useState("")
-    const [mother, setmother] = useState({
-        name: "",
-        income: "",
-        work: "",
-        education: "",
-        phone: ""
-    })
-    const [father, setfather] = useState({
-        name: "",
-        income: "",
-        work: "",
-        education: "",
-        phone: ""
-    })
+const EditBiodata = ({ province, auth }) => {
+    const { data, setData, put, processing, errors } = useForm({
+        email: auth.user.email,
+        name: auth.user.name,
+        phone: auth.user.phone,
+        school: '',
+        birth_place: '',
+        date_birthday: '',
+        address: '',
+        province: '',
+        city: '',
+        subdistrict: '',
+        village: '',
+        father: {
+            name: '',
+            education: '',
+            work: '',
+            income: '',
+            phone: '',
+        },
+        mother: {
+            name: '',
+            education: '',
+            work: '',
+            income: '',
+            phone: '',
+        },
+        password: '',
+    });
 
-    const getData = async () => {
-        const response = await api("GET", "/user");
-        if (response == 401) navigate("/auth/login")
-        setEmail(response.user.email)
-        setName(response.user.name)
-        setPhone(response.user.phone)
-        setLoading(false)
+    const [kab, setKab] = useState([{ value: "DEFAULT", title: "::Pilih Kabupaten::" }])
+    const [kec, setkec] = useState([{ value: "DEFAULT", title: "::Pilih Kecamatan::" }])
+    const [kel, setKel] = useState([{ value: "DEFAULT", title: "::Pilih Kelurahan/Desa::" }])
+
+    const handleChange = (name, key, value) => {
+        let dataPerent = data[name]
+        dataPerent[key] = value;
+        setData(name, dataPerent)
+    }
+
+    const getData = async (type, id) => {
+        const response = await fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/${type}/${id}.json`)
+        const data = await response.json()
+        const dataFilter = data.map((value) => {
+            return {
+                "title": value.name,
+                "value": value.id
+            }
+        })
+        return dataFilter;
     }
 
     useEffect(() => {
-        getData();
-    }, [])
+        if (data.province) {
+            setData('subdistrict', '')
+            setData('city', '')
+            setData('village', '')
+            setKab((prev => [prev[0]]))
+            setkec((prev => [prev[0]]))
+            setKel((prev => [prev[0]]))
+            getData('regencies', data.province.value).then((response) => {
+                const x = response
+                x.splice(0, 0, kab[0]);
+                setKab(x)
+            })
+        }
+    }, [data.province])
+    useEffect(() => {
+        if (data.city) {
+            setData('subdistrict', '')
+            setData('village', '')
+            setkec((prev => [prev[0]]))
+            setKel((prev => [prev[0]]))
+            getData('districts', data.city.value).then((response) => {
+                const x = response
+                x.splice(0, 0, kec[0]);
+                setkec(x)
+            })
+        }
+    }, [data.city])
+    useEffect(() => {
+        if (data.subdistrict) {
+            setData('village', '')
+            setKel((prev => [prev[0]]))
+            getData('villages', data.subdistrict.value).then((response) => {
+                const x = response
+                x.splice(0, 0, kel[0]);
+                setKel(x)
+            })
+        }
+    }, [data.subdistrict])
 
-    const submit = async (e) => {
+    const submit = (e) => {
         e.preventDefault()
-
-        const response = await api("PUT", `api/user/{user}`, {
-            email,
-            name,
-            phone,
-            birth_place,
-            date_birthday,
-            scholl,
-            province,
-            city,
-            subdistrict,
-            village,
-            address,
-            mother,
-            father
-        })
-    }
-
-    if (loading) {
-        return (
-            <h1>loading</h1>
-        )
+        put(route('user.update'))
     }
 
     return (
@@ -89,7 +119,7 @@ const EditBiodata = () => {
                                     </Label>
                                 </div>
                                 <div className="md:col-span-3 col-span-4">
-                                    <Input name={"Email"} type={"email"} value={email} onChange={(e) => setEmail(e.target.value)} />
+                                    <Input name={"Email"} type={"email"} value={data.email} onChange={(e) => setData('email', e.target.value)} />
                                 </div>
                             </div>
 
@@ -100,7 +130,7 @@ const EditBiodata = () => {
                                     </Label>
                                 </div>
                                 <div className="md:col-span-3 col-span-4">
-                                    <Input name={"Nama lengkap"} type={"text"} value={name} onChange={(e) => setName(e.target.value)} />
+                                    <Input name={"Nama lengkap"} type={"text"} value={data.name} onChange={(e) => setData('name', e.target.value).toUpperCase()} />
                                 </div>
                             </div>
 
@@ -111,7 +141,7 @@ const EditBiodata = () => {
                                     </Label>
                                 </div>
                                 <div className="md:col-span-3 col-span-4">
-                                    <Input name={"No HP"} type={"number"} value={phone} onChange={(e) => setPhone(e.target.value)} />
+                                    <Input name={"No HP"} type={"number"} value={data.phone} onChange={(e) => setData('phone', e.target.value)} />
                                 </div>
                             </div>
 
@@ -122,7 +152,7 @@ const EditBiodata = () => {
                                     </Label>
                                 </div>
                                 <div className="md:col-span-3 col-span-4">
-                                    <Input name={"Tempat Lahir"} type={"text"} value={birth_place} onChange={(e) => setbirth_place(e.target.value)} />
+                                    <Input name={"Tempat Lahir"} type={"text"} value={data.birth_place} onChange={(e) => setData('birth_place', e.target.value.toUpperCase())} />
                                 </div>
                             </div>
 
@@ -133,7 +163,7 @@ const EditBiodata = () => {
                                     </Label>
                                 </div>
                                 <div className="md:col-span-3 col-span-4">
-                                    <Input name={"Tanggal lahir"} type={"date"} value={date_birthday} onChange={(e) => setdate_birthday(e.target.value)} />
+                                    <Input name={"Tanggal lahir"} type={"date"} value={data.date_birthday} onChange={(e) => setData('date_birthday', e.target.value)} />
                                 </div>
                             </div>
                             <div className={`grid gap-1.5 my-3 md:grid-cols-4 md:grid-rows-1 md:gap-5`}>
@@ -142,8 +172,8 @@ const EditBiodata = () => {
                                         Asal Sekolah
                                     </Label>
                                 </div>
-                                <div className="md:col-span-3 col-span-4">
-                                    <Input name={"Asal Sekolah"} type={"text"} value={scholl} onChange={(e) => setscholl(e.target.value)} />
+                                <div className="md:col-span-3 col-span-4 ">
+                                    <Input name={"Asal Sekolah"} type={"text"} value={data.school} onChange={(e) => setData('school', e.target.value.toUpperCase())} />
                                 </div>
                             </div>
                         </div>
@@ -160,7 +190,10 @@ const EditBiodata = () => {
                                     </Label>
                                 </div>
                                 <div className="md:col-span-3 col-span-4">
-                                    <Input name={"Provinsi"} type={"text"} value={province} onChange={(e) => setprovince(e.target.value)} />
+                                    <Dropdown name={"Provinsi"} value={province} onChange={(e) => setData('province', {
+                                        "title": e.target.selectedOptions[0].text,
+                                        "value": e.target.value
+                                    })} />
                                 </div>
                             </div>
 
@@ -171,7 +204,10 @@ const EditBiodata = () => {
                                     </Label>
                                 </div>
                                 <div className="md:col-span-3 col-span-4">
-                                    <Input name={"Wilayah/Kota"} type={"text"} value={city} onChange={(e) => setcity(e.target.value)} />
+                                    <Dropdown name={"Wilayah/Kota"} value={kab} onChange={(e) => setData('city', {
+                                        "title": e.target.selectedOptions[0].text,
+                                        "value": e.target.value
+                                    })} disabled={kab.length < 2} />
                                 </div>
                             </div>
 
@@ -182,7 +218,10 @@ const EditBiodata = () => {
                                     </Label>
                                 </div>
                                 <div className="md:col-span-3 col-span-4">
-                                    <Input name={"Kecamatan"} type={"text"} value={subdistrict} onChange={(e) => setsubdistrict(e.target.value)} />
+                                    <Dropdown name={"Kecamatan"} value={kec} onChange={(e) => setData('subdistrict', {
+                                        "title": e.target.selectedOptions[0].text,
+                                        "value": e.target.value
+                                    })} disabled={kec.length < 2} />
                                 </div>
                             </div>
 
@@ -193,7 +232,10 @@ const EditBiodata = () => {
                                     </Label>
                                 </div>
                                 <div className="md:col-span-3 col-span-4">
-                                    <Input name={"Kelurahan/Desa"} type={"text"} value={village} onChange={(e) => setvillage(e.target.value)} />
+                                    <Dropdown name={"Kelurahan/Desa"} value={kel} onChange={(e) => setData('village', {
+                                        "title": e.target.selectedOptions[0].text,
+                                        "value": e.target.value
+                                    })} disabled={kel.length < 2} />
                                 </div>
                             </div>
 
@@ -204,17 +246,17 @@ const EditBiodata = () => {
                                     </Label>
                                 </div>
                                 <div className="md:col-span-3 col-span-4">
-                                    {/* <Input name={"Alamat"} type={"textarea"} value={address} onChange={(e) => setaddress(e.target.value)} /> */}
+                                    <Input name={"Alamat"} type={"textarea"} value={data.address} onChange={(e) => setData('address', e.target.value)} />
                                 </div>
                             </div>
                         </div>
 
-                        <TablePerent title={"Ibu"} setState={setmother} />
-                        <TablePerent title={"Ayah"} setState={setfather} />
+                        <TablePerent title={"Ibu"} setState={handleChange} value={data.mother} />
+                        <TablePerent title={"Ayah"} setState={handleChange} value={data.father} />
 
                         <div className="w-full flex justify-between my-8 px-6  border-t-2 border-gray-200 pt-4">
-                            <button onClick={() => navigate("/student/dashboard/")} type="button" className="rounded-md bg-gray-200 px-5 py-2 text-sm leading-6 text-black shadow-sm transition-all duration-300 hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-500">Batal</button>
-                            <button type="submit" className="rounded-md bg-blue-600 px-5 py-2 text-sm font-semibold leading-6 text-my-white shadow-sm transition-all duration-300 hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">Simpan</button>
+                            <Button variant={"secondary"} disabled={processing} className={"w-24"} onClick={() => router.get("/dashboard")}>Batal</Button>
+                            <Button variant={"primary"} loading={processing} className={"w-24"}>Simpan</Button>
                         </div>
                     </div>
                 </form >

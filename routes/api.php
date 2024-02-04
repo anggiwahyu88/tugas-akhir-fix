@@ -20,14 +20,14 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::post("/auth/login", [AuthController::class, "login"])->name("login");
-Route::post('/auth/register', [AuthController::class, "register"]);
+// Route::post("/auth/login", [AuthController::class, "login"])->name("login");
+// Route::post('/auth/register', [AuthController::class, "register"]);
 
-Route::middleware(['auth:sanctum'])->group(function () {
-    Route::resource('user', UserController::class)->only([
-        'update', 'index', 'destroy'
-    ]);
-    Route::resource('news', NewsController::class)->except([
-        'edit', 'store'
-    ]);
-});
+// Route::middleware(['auth:sanctum'])->group(function () {
+//     Route::resource('user', UserController::class)->only([
+//         'update', 'index', 'destroy'
+//     ]);
+//     Route::resource('news', NewsController::class)->except([
+//         'edit', 'store'
+//     ]);
+// });

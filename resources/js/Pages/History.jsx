@@ -17,7 +17,8 @@ const History = () => {
                 <p> <b>Drs. Sudibjo:</b> mulai tahun 1999 s.d 2000</p>
                 <p> <b>Drs. Suandi, M.M.:</b> mulai tahun 2000 s.d 2008</p>
                 <p> <b>Drs. Hamid Manan, M.M.:</b> mulai tahun 2008 s.d. 2017</p>
-                <p><b>Drs. Masdugi:</b> mulai tahun 2017 s.d. sekarang</p>
+                <p><b>Drs. Masdugi:</b> mulai tahun 2017 s.d. 2023</p>
+                <p> <b>Agus Munir, S.T.,M.Pd.</b> mulai tahun 2023 s.d. sekarang</p>
             </div>
         </Guest>
     );

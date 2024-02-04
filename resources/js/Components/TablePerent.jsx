@@ -1,6 +1,6 @@
 import Input from "@/Components/Input";
 import Label from "@/Components/Label";
-import Dropdown from "@/helpers/Dropdown";
+import Dropdown from "./Dropdown";
 
 const TablePerent = ({ title, setState, value }) => {
     const key = title == "Ibu" ? "mother" : "father"

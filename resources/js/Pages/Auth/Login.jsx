@@ -4,6 +4,7 @@ import Input from "@/Components/Input";
 import Checkbox from "@/Components/Checkbox";
 import Label from "@/Components/Label";
 import { useEffect } from "react";
+import Button from "@/Components/Button";
 
 const Login = () => {
     const { data, setData, post, processing, errors, reset, clearErrors } = useForm({
@@ -74,7 +75,7 @@ const Login = () => {
                                     <p className="text-sm text-center text-red-600 mt-0 my-2 capitalize">{errors.invalid}</p>
                                     : ""
                             }
-                            <button type="submit" className="flex w-full justify-center rounded-md bg-blue-600 px-3 py-1.5 text-sm font-semibold leading-6 text-my-white shadow-sm transition-all duration-300 hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600" disabled={processing}>Sign in</button>
+                            <Button variant="primary" loading={processing} className={"w-full"}>Sign in</Button>
                         </div>
                     </form>
 

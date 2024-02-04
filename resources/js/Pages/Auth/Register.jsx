@@ -1,10 +1,10 @@
 import { Link, useForm } from "@inertiajs/react";
+import { useEffect } from "react";
+import Dropdown from "@/Components/Dropdown";
+import Button from "@/Components/Button";
 import Guest from '@/Layouts/GuestLayout';
 import Input from "@/Components/Input";
 import Label from "@/Components/Label";
-import { useEffect } from "react";
-import InputError from "@/Components/InputError";
-import Dropdown from "@/helpers/Dropdown";
 
 const Register = () => {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -16,10 +16,6 @@ const Register = () => {
         password: '',
         password_confirmation: '',
     });
-
-    useEffect(() => {
-        console.log(errors);
-    }, [errors])
 
     const listGender = [
         {
@@ -95,14 +91,7 @@ const Register = () => {
                             <Input className="my-2" label={"Ulangi Password"} name={"Ulangi password"} type={"password"} value={data.password_confirmation} onChange={(e) => setData('password_confirmation', e.target.value)} err={errors.password_confirmation}/>
                         </div>
 
-                        <div>
-                            {/* {
-                                errMsg ?
-                                    <p className="text-sm text-center text-red-600 mt-0 my-2 capitalize">{errMsg}</p>
-                                    : ""
-                            } */}
-                            <button type="submit" className="flex w-full justify-center rounded-md bg-blue-600 px-3 py-1.5 text-sm font-semibold leading-6 text-my-white shadow-sm transition-all duration-300 hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">Daftar</button>
-                        </div>
+                        <Button title={"Daftar"} loading={processing}/>
                     </form>
 
                     <p className="mt-10 text-center text-base text-gray-500">
