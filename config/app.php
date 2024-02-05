@@ -3,6 +3,11 @@
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
 
+$telescope = [];
+
+if (env('APP_ENV') == "local") {
+    $telescope = [App\Providers\TelescopeServiceProvider::class];
+}
 return [
 
     /*
@@ -168,8 +173,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        App\Providers\TelescopeServiceProvider::class,
-    ])->toArray(),
+    ])->merge($telescope)->toArray(),
 
     /*
     |--------------------------------------------------------------------------
