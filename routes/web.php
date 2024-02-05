@@ -30,9 +30,6 @@ Route::get('/faqs', function () {
 Route::get('/sejarah', function () {
     return Inertia::render('History');
 });
-Route::get('/123', function () {
-    return abort(404);
-});
 Route::get('/visi-dan-misi', function () {
     return Inertia::render('VisionMision');
 });

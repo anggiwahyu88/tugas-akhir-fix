@@ -2,12 +2,14 @@
 
 namespace App\Exceptions;
 
+use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
-use App\Exceptions\InvalidOrderException;
 use Illuminate\Http\Response;
+use Inertia\Inertia;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -31,28 +33,17 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
-
-        // $this->renderable(function (NotFoundHttpException $e, Request $request) {
-        //     return response($e->getStatusCode(), 200)
-        //           ->header('Content-Type', 'text/plain');
-        //     return Inertia::render('Error/404')
-        //         ->toResponse($request)
-        //         ->setStatusCode($e->getStatusCode());
-        // });
-        $this->renderable(function (Response $response, Request $request) {
-            
+        $this->renderable(function (HttpException $e) {
+            if($e->getStatusCode() ==404){
+                return Inertia::render('Error/404');
+            }
+            if($e->getStatusCode() ==401){
+                return Inertia::render('Error/401');
+            }
+            if($e->getStatusCode() ==500 && env('APP_ENV') == 'production'){
+                return Inertia::render('Error/500');
+            }
         });
-        // $this->renderable(function (Throwable $e, Request $request) {
-        //     if($e->getStatusCode() == 403){
-        //         return Inertia::render('Error/403')
-        //         ->toResponse($request)
-        //         ->setStatusCode($e->getStatusCode());
-        //     }
-        //     if( $e->getStatusCode() == 404){ 
-
-        //     }elseif($e->getStatusCode() == 500){
-        //        
-        //     }
-        // });
+        
     }
 }

@@ -1,6 +1,7 @@
 import { router } from "@inertiajs/react";
 
-const Error500 = () => {
+const Error500 = (pros) => {
+    console.log(pros);
     return ( 
         <div className="h-screen w-full flex items-center justify-center">
             <div className="flex flex-col items-center justify-center flex-wrap gap-4">

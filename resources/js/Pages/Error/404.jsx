@@ -1,6 +1,7 @@
 import { router } from "@inertiajs/react"
 
-const Error404 = () => {
+const Error404 = (props) => {
+    console.log(props)
     return (
         <div className="h-screen w-full flex items-center justify-center">
             <div className="flex flex-col items-center justify-center flex-wrap gap-4">
