@@ -79,7 +79,7 @@ class NewsController extends Controller
     {
         $news = News::findorfail($id);
         $news_collection = new NewsCollection($news->loadMissing('author:id,name,email', 'category'));
-        return Inertia::render('Admin/News', [
+        return Inertia::render('News', [
             "news" => $news_collection,
         ]);
     }

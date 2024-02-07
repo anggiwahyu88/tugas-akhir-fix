@@ -33,7 +33,7 @@ const Login = () => {
                     <form className="space-y-6" onSubmit={submit}>
                         <div>
                             <Label className={"block text-sm leading-6 text-gray-900"} htmlFor={"email"}>
-                                Eamil
+                                Email
                             </Label>
                             <Input
                                 className="my-2"

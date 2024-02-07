@@ -115,7 +115,7 @@ const EditBiodata = ({ province, auth }) => {
                             <div className={`grid gap-1.5 my-3 md:grid-cols-4 md:grid-rows-1 md:gap-5`}>
                                 <div className="h-min md:h-full md:flex md:justify-end md:items-center">
                                     <Label className={"text-end"} htmlFor={"Email"}>
-                                        Eamil
+                                        Email
                                     </Label>
                                 </div>
                                 <div className="md:col-span-3 col-span-4">

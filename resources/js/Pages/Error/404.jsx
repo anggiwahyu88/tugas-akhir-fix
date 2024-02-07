@@ -6,7 +6,7 @@ const Error404 = (props) => {
         <div className="h-screen w-full flex items-center justify-center">
             <div className="flex flex-col items-center justify-center flex-wrap gap-4">
                 <div className="w-[26rem] my-4">
-                    <img src="../storage/error-404.svg" alt="not found" style={{ objectFit: "cover" }} />
+                    <img src="/storage/error-404.svg" alt="not found" style={{ objectFit: "cover" }} />
                 </div>
                 <p className="text-6xl font-semibold">Not Found</p>
                 <p className="text-3xl">Page tidak ditemukan</p>

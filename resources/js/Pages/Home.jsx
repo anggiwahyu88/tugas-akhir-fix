@@ -2,8 +2,8 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { alumni } from "../helpers/data/alumni.json";
 import { Link } from "@inertiajs/react";
 import Marquee from "react-fast-marquee";
-import 'react-lazy-load-image-component/src/effects/blur.css';
 import Guest from '@/Layouts/GuestLayout';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 function App({ news }) {
     return (

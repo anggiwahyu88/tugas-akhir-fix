@@ -62,7 +62,7 @@ const Register = () => {
                         </div>
                         <div>
                             <Label htmlFor={"Email"} className={"block text-sm leading-6 text-gray-900"}>
-                                Eamil
+                                Email
                             </Label>
                             <Input className="my-2" name={"Email"} type={"email"} value={data.email} onChange={(e) => setData('email', e.target.value)} err={errors.email}/>
                         </div>
@@ -91,7 +91,7 @@ const Register = () => {
                             <Input className="my-2" label={"Ulangi Password"} name={"Ulangi password"} type={"password"} value={data.password_confirmation} onChange={(e) => setData('password_confirmation', e.target.value)} err={errors.password_confirmation}/>
                         </div>
 
-                        <Button title={"Daftar"} loading={processing}/>
+                        <Button variant="primary" className={"w-full"} loading={processing}>Daftar</Button>
                     </form>
 
                     <p className="mt-10 text-center text-base text-gray-500">
