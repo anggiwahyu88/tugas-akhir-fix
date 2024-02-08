@@ -23,6 +23,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(UrlGenerator $url): void
     {
-        URL::forceScheme(env('APP_PROTOCOL'));
+        URL::forceScheme(config('app.protocol'));
     }
 }

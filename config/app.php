@@ -35,6 +35,7 @@ return [
     */
 
     'env' => env('APP_ENV', 'production'),
+    'protocol' => env('APP_PROTOCOL', 'http'),
 
     /*
     |--------------------------------------------------------------------------
