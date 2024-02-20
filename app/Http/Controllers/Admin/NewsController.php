@@ -117,10 +117,13 @@ class NewsController extends Controller
     public function update(Request $request, $id)
     {
         $news = News::findorfail($id);
+        Storage::delete('public/' . $news->thumnil . '');
+        $image_path = $request->file('thumnil')->store('thumnil', 'public');
         $news->update([
             "title" => $request->title,
             "content" => $request->content,
             "id_category" => $request->category,
+            'thumnil' => $image_path,
         ]);
         return Redirect::route('dashboard');
     }
@@ -128,8 +131,9 @@ class NewsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy($id,Request $request)
     {
+        $user = $request->user();
         $news = News::findorfail($id);
         Storage::delete('public/' . $news->thumnil . '');
         $news->delete();

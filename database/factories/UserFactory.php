@@ -26,19 +26,49 @@ class UserFactory extends Factory
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
+            'phone' => random_int(10000000000, 99999999999),
+            'gender' => fake()->randomElement(['male', 'female']),
             'password' => static::$password ??= Hash::make('password'),
-            'remember_token' => Str::random(10),
+            'is_admin' => "false",
+            "step_1"=>"false",
+            "step_2"=>"false",
+            "step_3"=>"false",
         ];
     }
 
-    /**
-     * Indicate that the model's email address should be unverified.
-     */
-    public function unverified(): static
+    public function admin(): UserFactory
     {
-        return $this->state(fn (array $attributes) => [
-            'email_verified_at' => null,
-        ]);
+        return $this->state(function (array $attributes) {
+            return [
+                'is_admin' => "true",
+            ];
+        });
+    }
+    public function step_1(): UserFactory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'step_1' => "true",
+            ];
+        });
+    }
+    public function step_2(): UserFactory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'step_1' => "true",
+                'step_2' => "true",
+            ];
+        });
+    }
+    public function step_3(): UserFactory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'step_1' => "true",
+                'step_2' => "true",
+                'step_3' => "true",
+            ];
+        });
     }
 }

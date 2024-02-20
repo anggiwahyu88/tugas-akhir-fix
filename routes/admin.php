@@ -5,7 +5,7 @@ use App\Http\Controllers\Admin\PinController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::middleware('auth')->group(function () {      
+Route::middleware('auth', 'isAdmin')->group(function () {
     Route::get('/dashboard/news', [NewsController::class, 'index'])->name("news.index");
     Route::get('/dashboard/news/upload', [NewsController::class, 'store'])->name("news.store");
     Route::post('/dashboard/news', [NewsController::class, 'create'])->name("news.create");

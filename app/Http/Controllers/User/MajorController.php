@@ -16,24 +16,27 @@ class MajorController extends Controller
     {
         $user = $request->user();
 
-        if ($user->step_1 == "false" || $user->step_2 == "false" || $user->step_3 == "true") return abort(404);
-        return Inertia::render('User/ChooseMajor');
+        if ($user->step_1 == "true" && $user->step_2 == "true" && $user->step_3 == "false") return Inertia::render('User/ChooseMajor');
+        return abort(404);
     }
 
     public function create(Request $request): RedirectResponse
     {
         $user = $request->user();
-        Major_user::create([
-            "id_user"    => $user->id,
-            "option_1" => $request->option_1,
-            "option_2" => $request->option_2,
-            "option_3" => $request->option_3,
-        ]);
-
-        $user->update([
-            "step_3" => true
-        ]);
-
-        return Redirect::route('dashboard');
+        if ($user->step_1 == "true" && $user->step_2 == "true" && $user->step_3 == "false"){
+            Major_user::create([
+                "id_user"    => $user->id,
+                "option_1" => $request->option_1,
+                "option_2" => $request->option_2,
+                "option_3" => $request->option_3,
+            ]);
+    
+            $user->update([
+                "step_3" => true
+            ]);
+    
+            return Redirect::route('dashboard');
+        }
+        return abort(404);
     }
 }

@@ -5,7 +5,7 @@ use App\Http\Controllers\User\RaporController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth', 'isUser')->group(function () {
     Route::get('/dashboard/biodata', [UserController::class, 'edit'])->name("user.edit");
     Route::put('/dashboard/biodata', [UserController::class, 'update'])->name("user.update");
 

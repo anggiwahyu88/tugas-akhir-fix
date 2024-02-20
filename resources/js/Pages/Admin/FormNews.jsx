@@ -1,15 +1,14 @@
+import { Link, useForm } from "@inertiajs/react";
+import { Suspense } from "react";
+import UserLayout from "@/Layouts/UserLayout";
+import ReactQuill from "react-quill"
+import Dropdown from "@/Components/Dropdown";
 import Input from "@/Components/Input";
 import Label from "@/Components/Label";
-import UserLayout from "@/Layouts/UserLayout";
-import { Link, useForm } from "@inertiajs/react";
-import { lazy, Suspense } from "react";
-import Dropdown from "@/Components/Dropdown";
-
-const ReactQuill = lazy(() => import('react-quill'));
 import 'react-quill/dist/quill.snow.css'
 
-const FormNews = ({ option, news }) => {
-    const formats = [
+const FormNews = ({ option, news }) => {    
+const formats = [
         "header", "height", "bold", "italic",
         "underline", "font",
         "list", "color", "bullet", "indent",

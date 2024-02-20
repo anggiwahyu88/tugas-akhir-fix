@@ -1,5 +1,5 @@
 import UserLayout from "@/Layouts/UserLayout";
-import { Link, useForm } from "@inertiajs/react";
+import { Link } from "@inertiajs/react";
 
 const NewsUpdate = ({ news }) => {
     return (

@@ -30,13 +30,13 @@ class Handler extends ExceptionHandler
         });
         $this->renderable(function (HttpException $e) {
             if($e->getStatusCode() ==404){
-                return Inertia::render('Error/404');
+                return Inertia::render('Error/404')->toResponse(\request())->setStatusCode(404);
             }
             if($e->getStatusCode() ==401){
-                return Inertia::render('Error/401');
+                return Inertia::render('Error/401')->toResponse(\request())->setStatusCode(401);
             }
             if($e->getStatusCode() ==500 && env('APP_ENV') == 'production'){
-                return Inertia::render('Error/500');
+                return Inertia::render('Error/500')->toResponse(\request())->setStatusCode(500);
             }
         });
         

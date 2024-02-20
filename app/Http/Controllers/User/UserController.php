@@ -18,7 +18,7 @@ class UserController extends Controller
     {
         $user = $request->user();
 
-        if ($user->step_1 == "true") abort(404);
+        if ($user->step_1 == "true") return abort(404);
         $api_url = 'https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json';
         $json_data = file_get_contents($api_url);
         $response_data = json_decode($json_data);
@@ -41,6 +41,8 @@ class UserController extends Controller
     public function update(Request $request): RedirectResponse
     {
         $user = $request->user();
+        if ($user->step_1 == "true") return abort(404);
+
         $mother = Mothers::create($request->mother);
 
         $father = Fathers::create($request->father);

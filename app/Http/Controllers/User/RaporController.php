@@ -16,37 +16,40 @@ class RaporController extends Controller
     {
         $user = $request->user();
 
-        if ($user->step_1 == "false" || $user->step_2 == "true") return abort(404);
-        return Inertia::render('User/InputRapor');
+        if ($user->step_1 == "true" && $user->step_2 == "false" && $user->step_3 == "false") return Inertia::render('User/InputRapor');
+        return abort(404);
     }
 
     public function create(Request $request): RedirectResponse
     {
         $user = $request->user();
-        $semesters = ['semester_1', 'semester_2', 'semester_3', 'semester_4', 'semester_5'];
+        if ($user->step_1 == "true" && $user->step_2 == "false" && $user->step_3 == "false") {
+            $semesters = ['semester_1', 'semester_2', 'semester_3', 'semester_4', 'semester_5'];
 
-        $values = [];
+            $values = [];
 
-        foreach ($semesters as $semester) {
-            $semesterObj = (object)$request->$semester;
-            $totalScore = $semesterObj->inggris + $semesterObj->indonesia + $semesterObj->ipa + $semesterObj->matematika;
+            foreach ($semesters as $semester) {
+                $semesterObj = (object)$request->$semester;
+                $totalScore = $semesterObj->inggris + $semesterObj->indonesia + $semesterObj->ipa + $semesterObj->matematika;
 
-            $values[$semester] = $totalScore;
+                $values[$semester] = $totalScore;
+            }
+
+            Value_user::create([
+                "id_user"    => $user->id,
+                "semester_1" => $values['semester_1'],
+                "semester_2" => $values['semester_2'],
+                "semester_3" => $values['semester_3'],
+                "semester_4" => $values['semester_4'],
+                "semester_5" => $values['semester_5'],
+            ]);
+
+            $user->update([
+                "step_2" => true
+            ]);
+
+            return Redirect::route('dashboard');
         }
-
-        Value_user::create([
-            "id_user"    => $user->id,
-            "semester_1" => $values['semester_1'],
-            "semester_2" => $values['semester_2'],
-            "semester_3" => $values['semester_3'],
-            "semester_4" => $values['semester_4'],
-            "semester_5" => $values['semester_5'],
-        ]);
-
-        $user->update([
-            "step_2" => true
-        ]);
-
-        return Redirect::route('dashboard');
+        return abort(404);
     }
 }
