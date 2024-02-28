@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Address_users;
 use App\Models\Fathers;
 use App\Models\Mothers;
 use App\Models\Schools;
@@ -22,19 +23,19 @@ class UserController extends Controller
         $api_url = 'https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json';
         $json_data = file_get_contents($api_url);
         $response_data = json_decode($json_data);
-        $province=[[
-            "title"=>"::Pilih Provinsi::",
-            "value"=>"DEFAULT"
+        $province = [[
+            "title" => "::Pilih Provinsi::",
+            "value" => "DEFAULT"
         ]];
         foreach ($response_data as $value) {
-            array_push($province,[
-                "value"=>$value->id,
-                "title"=>$value->name
+            array_push($province, [
+                "value" => $value->id,
+                "title" => $value->name
             ]);
         }
 
-        return Inertia::render('User/EditBiodata',[
-            "province"=>$province
+        return Inertia::render('User/EditBiodata', [
+            "province" => $province
         ]);
     }
 
@@ -47,19 +48,23 @@ class UserController extends Controller
 
         $father = Fathers::create($request->father);
 
+        $address = Address_users::create([
+            "province"      => $request->province['title'],
+            "city"          => $request->city['title'],
+            "subdistrict"   => $request->subdistrict['title'],
+            "village"       => $request->village['title'],
+            "address"       => $request->address,
+        ]);
+
         $school = Schools::firstOrCreate(['name' => $request->school]);
 
         $user->update([
             "id_father"     => $father->id,
             "id_mother"     => $mother->id,
             "id_school"     => $school->id,
+            "id_address"     => $address->id,
             "date_birthday" => $request->date_birthday,
             "birth_place"   => $request->birth_place,
-            "province"      => $request->province['title'],
-            "city"          => $request->city['title'],
-            "subdistrict"   => $request->subdistrict['title'],
-            "village"       => $request->village['title'],
-            "address"       => $request->address,
             "step_1" => "true"
         ]);
 

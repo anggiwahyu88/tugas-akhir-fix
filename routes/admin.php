@@ -1,18 +1,29 @@
 <?php
 
 use App\Http\Controllers\Admin\NewsController;
+use App\Http\Controllers\Admin\PendaftarController;
 use App\Http\Controllers\Admin\PinController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::middleware('auth', 'isAdmin')->group(function () {
-    Route::get('/dashboard/news', [NewsController::class, 'index'])->name("news.index");
-    Route::get('/dashboard/news/upload', [NewsController::class, 'store'])->name("news.store");
-    Route::post('/dashboard/news', [NewsController::class, 'create'])->name("news.create");
-    Route::get('/dashboard/news/{id}', [NewsController::class, 'edit'])->name("news.edit");
-    Route::put('/dashboard/news/{id}', [NewsController::class, 'update'])->name("news.update");
-    Route::delete('/dashboard/news/{id}', [NewsController::class, 'destroy'])->name("news.destroy");
+Route::prefix('dashboard')->middleware('auth', 'isAdmin')->group(function () {
+    Route::prefix('news')->name('news.')->group(function () {
+        Route::get('/', [NewsController::class, 'index'])->name("index");
+        Route::get('/upload', [NewsController::class, 'store'])->name("store");
+        Route::post('/', [NewsController::class, 'create'])->name("create");
+        Route::get('/{id}', [NewsController::class, 'edit'])->name("edit");
+        Route::put('/{id}', [NewsController::class, 'update'])->name("update");
+        Route::delete('/{id}', [NewsController::class, 'destroy'])->name("destroy");
+    });
 
-    Route::get('/dashboard/pin', [PinController::class, 'store'])->name("pin.store");
-    Route::post('/dashboard/pin', [PinController::class, 'create'])->name("pin.create");
+    Route::prefix('pin')->name('pin.')->group(function () {
+        Route::get('/', [PinController::class, 'store'])->name("store");
+        Route::post('/', [PinController::class, 'create'])->name("create");
+    });
+
+    Route::prefix('pendaftar')->name('pendaftar.')->group(function () {
+        Route::get('/', [PendaftarController::class, 'index'])->name("index");
+        Route::get('/pengumuman', [PendaftarController::class, 'store'])->name("store");
+        Route::post('/', [PendaftarController::class, 'create'])->name("create");
+    });
 });

@@ -1,6 +1,5 @@
 import { router, useForm } from "@inertiajs/react";
 import { useState } from "react";
-import { major } from "@/helpers/data/major.json";
 import UserLayout from "@/Layouts/UserLayout";
 import Dropdown from "@/Components/Dropdown";
 import Button from "@/Components/Button";
@@ -8,7 +7,7 @@ import Label from "@/Components/Label";
 import Modal from "@/Components/Modal";
 
 
-const ChooseMajor = () => {
+const ChooseMajor = ({major}) => {
     const [onModal, setOnModal] = useState(false)
 
     const { data, setData, post, processing, errors } = useForm({

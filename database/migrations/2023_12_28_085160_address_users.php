@@ -11,10 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('majors', function (Blueprint $table) {
+        Schema::create('address_users', function (Blueprint $table) {
             $table->id();
-            $table->string("name");
-            $table->string("nickname");
+            $table->string('province')->nullable();
+            $table->string('city')->nullable();
+            $table->string('subdistrict')->nullable();
+            $table->string('village')->nullable();
+            $table->string('address')->nullable();
         });
     }
 
@@ -23,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('majors');
+        Schema::dropIfExists('address_users');
     }
 };

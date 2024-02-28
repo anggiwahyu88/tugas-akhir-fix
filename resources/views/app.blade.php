@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title inertia>SMK SORE TULUNGAGUNG</title>
-  <link rel="icon" type="image/svg+xml" href="storage/logo-smk-sore.webp" />
+  <link rel="icon" type="image/svg+xml" href="/storage/logo-smk-sore.webp" />
     @if (Request::is('/'))
         <link rel="preload" href="/storage/hixbd8bp6d.png" as="image" />
     @endif

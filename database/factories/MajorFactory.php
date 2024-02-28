@@ -16,15 +16,40 @@ class MajorFactory extends Factory
      */
     public function definition(): array
     {
-        return [
-            "name"=> fake()->unique()->randomElement(["Desain Pemodelan & Informasi Bangunan",
-            "Teknik Instalasi Tenaga Listrik",
-            "Teknik Pemesinan",
-            "Teknik Pengelasan",
-            "Teknik Kendaraan Ringan Otomotif",
-            "Teknik & Bisnis Sepeda Motor",
-            "Teknik Elektronik Industri",
-            "Teknik Komputer Jaringan"])
-        ];
+        $major = fake()->unique()->randomElement([
+            [
+                "name" => "Desain Pemodelan & Informasi Bangunan",
+                "nickname" => "dpib"
+            ],
+            [
+                "name" => "Teknik Instalasi Tenaga Listrik",
+                "nickname" => "titl"
+            ],
+            [
+                "name" => "Teknik Pemesinan",
+                "nickname" => "tpm"
+            ],
+            [
+                "name" => "Teknik Pengelasan",
+                "nickname" => "tp"
+            ],
+            [
+                "name" => "Teknik Kendaraan Ringan Otomotif",
+                "nickname" => "tkro"
+            ],
+            [
+                "name" => "Teknik & Bisnis Sepeda Motor",
+                "nickname" => "tbsm"
+            ],
+            [
+                "name" => "Teknik Elektronik Industri",
+                "nickname" => "tei"
+            ],
+            [
+                "name" => "Teknik Komputer Jaringan",
+                "nickname" => "tkj"
+            ],
+        ]);
+        return $major;
     }
 }

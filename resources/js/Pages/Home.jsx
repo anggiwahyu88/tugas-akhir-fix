@@ -93,7 +93,7 @@ function App({ news }) {
                     <LazyLoadImage
                         alt={"yamaha"}
                         effect="blur"
-                        src="/storagehttps://seeklogo.com/images/S/suzuki-logo-5311518DD9-seeklogo.com.png"
+                        src="https://seeklogo.com/images/S/suzuki-logo-5311518DD9-seeklogo.com.png"
                         className="h-40 w-48 mx-5"
                     />
                     <LazyLoadImage

@@ -30,13 +30,21 @@ class User extends Authenticatable
     public function mother(): BelongsTo
     {
         return $this->belongsTo(Mothers::class, 'id_mother', 'id');
-    } 
+    }
     public function father(): BelongsTo
     {
         return $this->belongsTo(Fathers::class, 'id_father', 'id');
     }
-     public function school(): BelongsTo
+    public function school(): BelongsTo
     {
         return $this->belongsTo(Schools::class, 'id_school', 'id');
+    }
+    public function value(): BelongsTo
+    {
+        return $this->belongsTo(Value_user::class, 'id_value', 'id');
+    }
+    public function address(): BelongsTo
+    {
+        return $this->belongsTo(Address_users::class, 'id_address', 'id');
     }
 }

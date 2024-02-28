@@ -13,14 +13,11 @@ return new class extends Migration
     {
         Schema::create('value_users', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger("id_user");
             $table->integer("semester_1");
             $table->integer("semester_2");
             $table->integer("semester_3");
             $table->integer("semester_4");
             $table->integer("semester_5");
-
-            $table->foreign("id_user")->references("id")->on("users");
         });
     }
 

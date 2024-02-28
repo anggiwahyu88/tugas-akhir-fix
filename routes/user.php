@@ -5,14 +5,19 @@ use App\Http\Controllers\User\RaporController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('auth', 'isUser')->group(function () {
-    Route::get('/dashboard/biodata', [UserController::class, 'edit'])->name("user.edit");
-    Route::put('/dashboard/biodata', [UserController::class, 'update'])->name("user.update");
+Route::prefix('dashboard')->middleware('auth', 'isUser')->group(function () {
+    Route::prefix('biodata')->name('user.')->group(function () {
+        Route::get('/', [UserController::class, 'edit'])->name("edit");
+        Route::put('/', [UserController::class, 'update'])->name("update");
+    });
+    
+    Route::prefix('rapor')->name('rapor.')->group(function () {
+        Route::get('/', [RaporController::class, 'show'])->name("show");
+        Route::post('/', [RaporController::class, 'create'])->name("create");
+    });
 
-    Route::get('/dashboard/rapor', [RaporController::class, 'show'])->name("rapor.show");
-    Route::post('/dashboard/rapor', [RaporController::class, 'create'])->name("rapor.create");
-
-    Route::get('/dashboard/jurusan', [MajorController::class, 'show'])->name("major.show");
-    Route::post('/dashboard/jurusan', [MajorController::class, 'create'])->name("major.create");
-
+    Route::prefix('jurusan')->name('major.')->group(function () {
+        Route::get('/', [MajorController::class, 'show'])->name("show");
+        Route::post('/', [MajorController::class, 'create'])->name("create");
+    });
 });
