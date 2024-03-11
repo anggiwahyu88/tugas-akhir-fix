@@ -50,8 +50,8 @@ class NewsTest extends TestCase
     public function test_list_news_can_be_rendered(): void
     {
         $user = User::factory()->admin()->create();
-        $news = News::factory(3)->author($user->id)->create();
-        $news = NewsCollection::collection($news->loadMissing('author:id,name,email', 'category'));
+        $category = News_categorys::factory()->create();
+        $news = News::factory(3)->author($user->id)->category($category->id)->create();
         $response = $this->actingAs($user)->get('dashboard/news');
         $response->assertStatus(200)->assertSessionHasNoErrors()->assertInertia(
             fn (Assert $page) => $page
@@ -63,8 +63,8 @@ class NewsTest extends TestCase
                         ->where("title", $news[0]->title)
                         ->where("content", $news[0]->content)
                         ->where("thumnil", $news[0]->thumnil)
-                        ->where("category", $news[0]->category)
-                        ->where("author", $news[0]->author)
+                        ->where("category.name", $category->name)
+                        ->where("author.name", $user->name)
                         ->etc()
                 )
         );
@@ -78,30 +78,30 @@ class NewsTest extends TestCase
 
         $response = $this->actingAs($user)->get('dashboard/news/' . $news->id);
         $response->assertStatus(200)
-        ->assertSessionHasNoErrors()
-        ->assertInertia(
-            fn (Assert $page) => $page
-                ->component("Admin/FormNews")
-                
-                ->has(
-                    "news",
-                    fn (Assert $page) => $page
-                        ->where("id", $news->id)
-                        ->where("title", $news->title)
-                        ->where("content", $news->content)
-                        ->where("thumnil", $news->thumnil)
-                        ->where("id_category", $news->id_category)
-                        ->where("id_author", $user->id)
-                        ->etc()
-                )
-                ->has(
-                    "option.1",
-                    fn (Assert $page) => $page
-                        ->where("title", $category->name)
-                        ->where("value", $category->id)
-                        ->etc()
-                )
-        );
+            ->assertSessionHasNoErrors()
+            ->assertInertia(
+                fn (Assert $page) => $page
+                    ->component("Admin/FormNews")
+
+                    ->has(
+                        "news",
+                        fn (Assert $page) => $page
+                            ->where("id", $news->id)
+                            ->where("title", $news->title)
+                            ->where("content", $news->content)
+                            ->where("thumnil", $news->thumnil)
+                            ->where("id_category", $news->id_category)
+                            ->where("id_author", $user->id)
+                            ->etc()
+                    )
+                    ->has(
+                        "option.1",
+                        fn (Assert $page) => $page
+                            ->where("title", $category->name)
+                            ->where("value", $category->id)
+                            ->etc()
+                    )
+            );
     }
 
     public function test_news_can_update(): void

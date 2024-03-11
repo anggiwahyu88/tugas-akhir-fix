@@ -24,10 +24,10 @@ return new class extends Migration
             $table->unsignedBigInteger('id_mother')->nullable();
             $table->unsignedBigInteger('id_school')->nullable();
             $table->unsignedBigInteger('id_value')->nullable();
-            $table->enum("step_1", ["true", "false"])->default("false");
-            $table->enum("step_2", ["true", "false"])->default("false");
-            $table->enum("step_3", ["true", "false"])->default("false");
-            $table->enum("is_admin", ["true", "false"])->default("false");
+            $table->boolean("step_1")->default(false);
+            $table->boolean("step_2")->default(false);
+            $table->boolean("step_3")->default(false);
+            $table->boolean("is_admin")->default(false);
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\User;
 
+use App\Models\Major;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Inertia\Testing\AssertableInertia as Assert;
@@ -110,6 +111,7 @@ class InputRaporTest extends TestCase
     {
         $user1 = User::factory()->create();
         $user2 = User::factory()->step_2()->create();
+        Major::factory(8)->create();
         $user3 = User::factory()->step_3()->create();
 
         $users = [$user1, $user2, $user3];

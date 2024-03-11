@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger("id_user");
             $table->unsignedBigInteger("id_major");
+            $table->integer("wave");
             $table->timestamps();
 
             $table->foreign("id_user")->references("id")->on("users");

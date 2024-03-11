@@ -25,6 +25,7 @@ class User extends Authenticatable
         'id_father',
         'id_mother',
         'id_school',
+        'id_value'
     ];
 
     public function mother(): BelongsTo

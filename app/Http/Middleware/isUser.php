@@ -16,6 +16,7 @@ class isUser
     public function handle(Request $request, Closure $next): Response
     {
         $user = $request->user();
-        if($user->is_admin =="true") return abort(401);
-        return $next($request);    }
+        if ($user->is_admin) return abort(401);
+        return $next($request);
+    }
 }

@@ -58,11 +58,11 @@ class ChooseMajorTest extends TestCase
     {
         $user1 = User::factory()->create();
         $user2 = User::factory()->step_1()->create();
+        $major = Major::factory(8)->create();
         $user3 = User::factory()->step_3()->create();
 
         $users = [$user1, $user2, $user3];
 
-        $major = Major::factory(8)->create();
         foreach ($users as $key => $user) {
             try {
                 $response = $this->actingAs($user)->get('/dashboard/jurusan');

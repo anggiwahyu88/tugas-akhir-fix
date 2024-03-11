@@ -23,7 +23,7 @@ class MajorController extends Controller
             Cache::put('major', $major, 1000);
         }
 
-        if ($user->step_1 == "true" && $user->step_2 == "true" && $user->step_3 == "false") return Inertia::render('User/ChooseMajor', [
+        if ($user->step_1 && $user->step_2 && !$user->step_3) return Inertia::render('User/ChooseMajor', [
             "major" => $major
         ]);
         return abort(404);
@@ -32,7 +32,7 @@ class MajorController extends Controller
     public function create(Request $request): RedirectResponse
     {
         $user = $request->user();
-        if ($user->step_1 == "true" && $user->step_2 == "true" && $user->step_3 == "false") {
+        if ($user->step_1 && $user->step_2 && !$user->step_3) {
             Major_user::create([
                 "id_user"    => $user->id,
                 "option_1" => $request->option_1,

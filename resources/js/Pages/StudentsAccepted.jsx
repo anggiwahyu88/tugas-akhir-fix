@@ -1,25 +1,20 @@
-import UserLayout from "@/Layouts/UserLayout";
 import Button from "@/Components/Button";
-import { router } from "@inertiajs/react"
+import UserLayout from "@/Layouts/UserLayout";
+import { router } from "@inertiajs/react";
 
-const Pendaftar = ({ registrant, students }) => {
+const StudentsAccepted = ({ students }) => {
     return (
         <UserLayout>
             <div className="overflow-x-auto shadow-md sm:rounded-lg px-4 py-6 min-h-[calc(100vh-64px)] bg-white">
                 {
-                    registrant.length <= 0 ?
+                    students.length <= 0 ?
                         <div className="w-full mt-14 text-center text-2xl font-bold">
-                            <h4>Tidak ada Pendaftar</h4>
+                            <h4>Tidak ada Siswa</h4>
                         </div>
                         :
                         <>
                             <div className="w-full flex justify-end px-6 my-5">
-                                {
-                                    students <= 0 ?
-                                        <Button variant="primary" onClick={() => router.get('/dashboard/pendaftar/pengumuman')}>Terima Siswa</Button>
-                                        :
-                                        <Button variant="primary" onClick={() => router.get('/dashboard/siswa')}>Siswa Diterima</Button>
-                                }
+                                <Button variant="primary" onClick={() => window.location.replace('/dashboard/siswa/export')}>Download</Button>
                             </div>
                             <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
                                 <thead className="text-xs text-gray-700 uppercase bg-gray-50">
@@ -31,6 +26,9 @@ const Pendaftar = ({ registrant, students }) => {
                                             Nama
                                         </th>
                                         <th scope="col" className="px-6 py-3">
+                                            Jenis Kelamin
+                                        </th>
+                                        <th scope="col" className="px-6 py-3">
                                             Asal Sekolah
                                         </th>
                                         <th scope="col" className="px-6 py-3">
@@ -40,44 +38,45 @@ const Pendaftar = ({ registrant, students }) => {
                                             Total Nilai
                                         </th>
                                         <th scope="col" className="px-6 py-3">
-                                            Pilihan 1
+                                            Jurusan
                                         </th>
                                         <th scope="col" className="px-6 py-3">
-                                            Pilihan 2
-                                        </th>
-                                        <th scope="col" className="px-6 py-3">
-                                            Pilihan 3
+                                            Diterima pada tanggal
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {
-                                        registrant.map((data, i) => {
+                                        students.map((student, i) => {
+                                            const dateObject = new Date(student.created_at);
+                                            const year = dateObject.getFullYear();
+                                            const month = dateObject.getMonth() + 1;
+                                            const day = dateObject.getDate();
                                             return (
                                                 <tr className="text-gray-900 bg-white border-b hover:bg-gray-50" key={i}>
                                                     <th scope="row" className="px-6 py-4 font-bold whitespace-nowrap capitalize">
                                                         {i + 1}
                                                     </th>
                                                     <th scope="row" className="px-6 py-4 font-medium whitespace-nowrap capitalize">
-                                                        {data.name}
+                                                        {student.user.name}
                                                     </th>
                                                     <td className="px-6 py-4 capitalize">
-                                                        {data.school.name}
+                                                        {student.user.gender == "male" ? "Laki-Laki" : "Perempuan"}
                                                     </td>
                                                     <td className="px-6 py-4 capitalize">
-                                                        {data.date_birthday}
+                                                        {student.user.school.name}
                                                     </td>
                                                     <td className="px-6 py-4 capitalize">
-                                                        {data.value.semester_1 + data.value.semester_2 + data.value.semester_3 + data.value.semester_4 + data.value.semester_5}
+                                                        {student.user.date_birthday}
                                                     </td>
                                                     <td className="px-6 py-4 capitalize">
-                                                        {data.major.major_1.name}
+                                                        {student.user.total_nilai}
                                                     </td>
                                                     <td className="px-6 py-4 capitalize">
-                                                        {data.major.major_2.name}
+                                                        {student.major.name}
                                                     </td>
                                                     <td className="px-6 py-4 capitalize">
-                                                        {data.major.major_3.name}
+                                                        {`${year}-${month}-${day}`}
                                                     </td>
 
                                                 </tr>
@@ -93,4 +92,4 @@ const Pendaftar = ({ registrant, students }) => {
     );
 }
 
-export default Pendaftar;
+export default StudentsAccepted;

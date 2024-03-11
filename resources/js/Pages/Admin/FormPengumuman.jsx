@@ -26,7 +26,7 @@ const FormPengumuman = () => {
     }
 
     const submitModal = () => {
-        post(route('rapor.create'))
+        post(route('pendaftar.create'))
         setOnModal(false)
     }
 

@@ -13,14 +13,14 @@ function App({ news }) {
 
             <section className="w-full flex justify-center px-2 mt-5 lg:-mt-32 lg:px-0">
                 <div className="w-full grid grid-cols-2 max-w-6xl gap-4 lg:grid-cols-6 lg:gap-1">
-                    <div className="h-32 flex flex-col justify-around items-center transition-all duration-500 hover:bg-yellow-400 hover:text-my-white hover:opacity-100 lg:bg-white-blur">
+                    <Link href="news/category/bkk" className="h-32 flex flex-col justify-around items-center transition-all duration-500 hover:bg-yellow-400 hover:text-my-white hover:opacity-100 lg:bg-white-blur">
                         <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" className="text-6xl"><path d="M216,64H176a48,48,0,0,0-96,0H40A16,16,0,0,0,24,80V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V80A16,16,0,0,0,216,64ZM128,32a32,32,0,0,1,32,32H96A32,32,0,0,1,128,32Z"></path></svg>
                         <p className="text-2xl">Progam Kerja</p>
-                    </div>
-                    <div className="h-32 flex flex-col justify-around items-center transition-all duration-500 hover:bg-yellow-400 hover:text-my-white hover:opacity-100 lg:bg-white-blur">
+                    </Link>
+                    <Link href="news/category/achivment" className="h-32 flex flex-col justify-around items-center transition-all duration-500 hover:bg-yellow-400 hover:text-my-white hover:opacity-100 lg:bg-white-blur">
                         <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" className="text-6xl"><path d="M232,64H208V56a16,16,0,0,0-16-16H64A16,16,0,0,0,48,56v8H24A16,16,0,0,0,8,80V96a40,40,0,0,0,40,40h3.65A80.13,80.13,0,0,0,120,191.61V216H96a8,8,0,0,0,0,16h64a8,8,0,0,0,0-16H136V191.58c31.94-3.23,58.44-25.64,68.08-55.58H208a40,40,0,0,0,40-40V80A16,16,0,0,0,232,64ZM48,120A24,24,0,0,1,24,96V80H48v32q0,4,.39,8Zm144-8.9c0,35.52-28.49,64.64-63.51,64.9H128a64,64,0,0,1-64-64V56H192ZM232,96a24,24,0,0,1-24,24h-.5a81.81,81.81,0,0,0,.5-8.9V80h24Z"></path></svg>
                         <p className="text-2xl">achivment</p>
-                    </div>
+                    </Link>
                     <div className="h-32 flex flex-col justify-around items-center transition-all duration-500 hover:bg-yellow-400 hover:text-my-white hover:opacity-100 lg:bg-white-blur">
                         <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" className="text-6xl"><path d="M248,120h-8V88a16,16,0,0,0-16-16H208V64a16,16,0,0,0-16-16H168a16,16,0,0,0-16,16v56H104V64A16,16,0,0,0,88,48H64A16,16,0,0,0,48,64v8H32A16,16,0,0,0,16,88v32H8a8,8,0,0,0,0,16h8v32a16,16,0,0,0,16,16H48v8a16,16,0,0,0,16,16H88a16,16,0,0,0,16-16V136h48v56a16,16,0,0,0,16,16h24a16,16,0,0,0,16-16v-8h16a16,16,0,0,0,16-16V136h8a8,8,0,0,0,0-16ZM32,168V88H48v80Zm56,24H64V64H88V192Zm104,0H168V64h24V175.82c0,.06,0,.12,0,.18s0,.12,0,.18V192Zm32-24H208V88h16Z"></path></svg>
                         <p className="text-2xl">Character</p>
@@ -34,10 +34,10 @@ function App({ news }) {
                         <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" className="text-6xl"><path d="M201.89,54.66A103.43,103.43,0,0,0,128.79,24H128A104,104,0,0,0,24,128v56a24,24,0,0,0,24,24H64a24,24,0,0,0,24-24V144a24,24,0,0,0-24-24H40.36A88.12,88.12,0,0,1,190.54,65.93,87.39,87.39,0,0,1,215.65,120H192a24,24,0,0,0-24,24v40a24,24,0,0,0,24,24h24a24,24,0,0,1-24,24H136a8,8,0,0,0,0,16h56a40,40,0,0,0,40-40V128A103.41,103.41,0,0,0,201.89,54.66ZM64,136a8,8,0,0,1,8,8v40a8,8,0,0,1-8,8H48a8,8,0,0,1-8-8V136Zm128,56a8,8,0,0,1-8-8V144a8,8,0,0,1,8-8h24v56Z"></path></svg>
                         <p className="text-2xl">Service</p>
                     </div>
-                    <div className="h-32 flex flex-col justify-around items-center transition-all duration-500 hover:bg-yellow-400 hover:text-my-white hover:opacity-100 lg:bg-white-blur">
+                    <Link href="news/category/kuliah" className="h-32 flex flex-col justify-around items-center transition-all duration-500 hover:bg-yellow-400 hover:text-my-white hover:opacity-100 lg:bg-white-blur">
                         <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" className="text-6xl"><path d="M251.76,88.94l-120-64a8,8,0,0,0-7.52,0l-120,64a8,8,0,0,0,0,14.12L32,117.87v48.42a15.91,15.91,0,0,0,4.06,10.65C49.16,191.53,78.51,216,128,216a130,130,0,0,0,48-8.76V240a8,8,0,0,0,16,0V199.51a115.63,115.63,0,0,0,27.94-22.57A15.91,15.91,0,0,0,224,166.29V117.87l27.76-14.81a8,8,0,0,0,0-14.12ZM128,200c-43.27,0-68.72-21.14-80-33.71V126.4l76.24,40.66a8,8,0,0,0,7.52,0L176,143.47v46.34C163.4,195.69,147.52,200,128,200Zm80-33.75a97.83,97.83,0,0,1-16,14.25V134.93l16-8.53ZM188,118.94l-.22-.13-56-29.87a8,8,0,0,0-7.52,14.12L171,128l-43,22.93L25,96,128,41.07,231,96Z"></path></svg>
                         <p className="text-2xl">Kuliah</p>
-                    </div>
+                    </Link>
                 </div>
             </section>
 
@@ -93,7 +93,7 @@ function App({ news }) {
                     <LazyLoadImage
                         alt={"yamaha"}
                         effect="blur"
-                        src="https://seeklogo.com/images/S/suzuki-logo-5311518DD9-seeklogo.com.png"
+                        src="/storage/suzuki.png"
                         className="h-40 w-48 mx-5"
                     />
                     <LazyLoadImage
@@ -112,6 +112,12 @@ function App({ news }) {
                         alt={"pama"}
                         effect="blur"
                         src="/storage/pama.png"
+                        className="h-40 w-48 mx-5"
+                    />
+                    <LazyLoadImage
+                        alt={"ut school"}
+                        effect="blur"
+                        src="/storage/ut_school.png"
                         className="h-40 w-48 mx-5"
                     />
                 </Marquee>

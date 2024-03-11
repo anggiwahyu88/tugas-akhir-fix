@@ -58,7 +58,7 @@ class RegisteredUserController extends Controller
             };
         }
         if ($request->pin == "2005") {
-            $data["is_admin"] = "true";
+            $data["is_admin"] = true;
         }
         $user = User::create($data);
         if ($request->pin != "2005") {

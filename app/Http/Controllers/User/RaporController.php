@@ -16,14 +16,14 @@ class RaporController extends Controller
     {
         $user = $request->user();
 
-        if ($user->step_1 == "true" && $user->step_2 == "false" && $user->step_3 == "false") return Inertia::render('User/InputRapor');
+        if ($user->step_1 && !$user->step_2  && !$user->step_3 ) return Inertia::render('User/InputRapor');
         return abort(404);
     }
 
     public function create(Request $request): RedirectResponse
     {
         $user = $request->user();
-        if ($user->step_1 == "true" && $user->step_2 == "false" && $user->step_3 == "false") {
+        if ($user->step_1 && !$user->step_2  && !$user->step_3 ) {
             $semesters = ['semester_1', 'semester_2', 'semester_3', 'semester_4', 'semester_5'];
 
             $values = [];
@@ -35,8 +35,7 @@ class RaporController extends Controller
                 $values[$semester] = $totalScore;
             }
 
-            Value_user::create([
-                "id_user"    => $user->id,
+            $valeu = Value_user::create([
                 "semester_1" => $values['semester_1'],
                 "semester_2" => $values['semester_2'],
                 "semester_3" => $values['semester_3'],
@@ -45,6 +44,7 @@ class RaporController extends Controller
             ]);
 
             $user->update([
+                "id_value" => $valeu->id,
                 "step_2" => true
             ]);
 

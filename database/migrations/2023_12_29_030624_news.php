@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('news', function (Blueprint $table) {
             $table->id();
             $table->string("title");
-            $table->string("content");
+            $table->longText("content");
             $table->string("thumnil");
             $table->unsignedBigInteger("id_category");
             $table->unsignedBigInteger("id_author");

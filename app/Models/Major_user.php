@@ -18,15 +18,15 @@ class Major_user extends Model
         'option_3',
     ];
 
-    public function option_11(): BelongsTo
+    public function major_1(): BelongsTo
     {
         return $this->belongsTo(Major::class, 'option_1', 'id');
     }
-    public function option_21(): BelongsTo
+    public function major_2(): BelongsTo
     {
         return $this->belongsTo(Major::class, 'option_2', 'id');
     }
-    public function option_31(): BelongsTo
+    public function major_3(): BelongsTo
     {
         return $this->belongsTo(Major::class, 'option_3', 'id');
     }

@@ -131,12 +131,21 @@ class NewsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id,Request $request)
+    public function destroy($id)
     {
-        $user = $request->user();
         $news = News::findorfail($id);
         Storage::delete('public/' . $news->thumnil . '');
         $news->delete();
         return Redirect::route('dashboard');
+    }
+
+    public function category($name)
+    {
+        $category = News_categorys::select("id", "name")->where("name", $name)->first();
+        
+        if(!$category) return Inertia::render("Error/404");
+        $news = News::where("id_category", $category->id)->get();
+        if(!$news) return Inertia::render("Error/404");
+        return Inertia::render("NewsList",["news"=>$news, "title"=>$name]);
     }
 }

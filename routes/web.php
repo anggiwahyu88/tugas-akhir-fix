@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\Admin\NewsController;
+use App\Http\Controllers\StudntsController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Models\News;
+use App\Models\Students;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,12 +44,19 @@ Route::get('/student-admission', function () {
     return Inertia::render('StudentAdmission');
 });
 Route::get('/news/{id}', [NewsController::class, 'show'])->name("news.show");
+Route::get('/news/category/{name}', [NewsController::class, 'category'])->name("news.show");
+Route::get('/news/{id}', [NewsController::class, 'show'])->name("news.show");
 
-
-
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+route::middleware(['auth'])->prefix("dashboard")->group(function () {
+    Route::get('/', function () {
+        $students = Students::all()->count();
+        return Inertia::render('Dashboard', [
+            "is_announcement" => $students
+        ]);
+    })->name('dashboard');
+    Route::get('/siswa', [StudntsController::class, 'index'])->name("siswa.index");
+    Route::get('/siswa/export', [StudntsController::class, 'export'])->name("siswa.export");
+});
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/user.php';
